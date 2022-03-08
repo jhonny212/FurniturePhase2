@@ -15,17 +15,19 @@ public class Bill {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private Profile profile;
-    private Integer nit;
     private double total;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nit")
+    private Client client;
 
     public Bill(){}
 
-    public Bill(Integer id, Date date_time, Profile profile, Integer nit, double total) {
+    public Bill(Integer id, Date date_time, Profile profile, Integer nit, double total,Client client) {
         this.id = id;
         this.dateTime = date_time;
         this.profile = profile;
-        this.nit = nit;
         this.total = total;
+        this.client = client;
     }
 
     @Override
@@ -34,8 +36,8 @@ public class Bill {
                 "id=" + id +
                 ", date_time=" + dateTime+
                 ", profile=" + profile +
-                ", nit=" + nit +
                 ", total=" + total +
+                ", client=" + client +
                 '}';
     }
 
@@ -47,28 +49,12 @@ public class Bill {
         this.id = id;
     }
 
-    public Date getDate_time() {
-        return dateTime;
-    }
-
-    public void setDate_time(Date date_time) {
-        this.dateTime = date_time;
-    }
-
     public Profile getProfile() {
         return profile;
     }
 
     public void setProfile(Profile profile) {
         this.profile = profile;
-    }
-
-    public Integer getNit() {
-        return nit;
-    }
-
-    public void setNit(Integer nit) {
-        this.nit = nit;
     }
 
     public double getTotal() {
@@ -78,4 +64,22 @@ public class Bill {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    public java.util.Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(java.util.Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    
 }
