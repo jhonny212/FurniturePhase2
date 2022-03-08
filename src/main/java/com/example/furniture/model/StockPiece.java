@@ -10,10 +10,12 @@ public class StockPiece {
     @Column(name = "id_sotck_piece")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private double cost;
+    @Column(nullable = false)
     private char status;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_piece")
+    @JoinColumn(name = "id_piece",nullable = false)
     private Piece piece;
 
     @Override

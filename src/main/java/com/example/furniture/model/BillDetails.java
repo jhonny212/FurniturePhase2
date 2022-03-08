@@ -10,13 +10,15 @@ public class BillDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_bill")
+    @JoinColumn(name = "id_bill",nullable = false)
     private Bill bill;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_furniture")
+    @JoinColumn(name = "id_furniture",nullable = false)
     private Furniture furniture;
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false,name="date_return")
     private java.util.Date dateReturn;
+    @Column(nullable = false,name="price_sale")
     private double priceSale;
 
     public BillDetails(Integer id, Bill bill, Furniture furniture, Date dateReturn, double priceSale) {

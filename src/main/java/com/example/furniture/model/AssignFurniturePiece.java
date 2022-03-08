@@ -9,10 +9,10 @@ public class AssignFurniturePiece {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_stock_piece")
+    @JoinColumn(name = "id_stock_piece",nullable = false)
     private StockPiece stockPiece;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "code_furniture")
+    @JoinColumn(name = "code_furniture",nullable = false)
     private Furniture furniture;
 
     public AssignFurniturePiece(Integer id, StockPiece stockPiece, Furniture furniture) {

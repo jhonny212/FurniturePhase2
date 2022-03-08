@@ -8,9 +8,13 @@ public class Category {
     @Column(name = "id_category")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String name;
 
     public Category(){}
+    public Category(String name){
+        this.name= name;
+    }
 
     @Override
     public String toString() {

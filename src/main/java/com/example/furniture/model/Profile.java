@@ -9,12 +9,16 @@ public class Profile {
     @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String username;
+    @Column(nullable = false,name="first_name")
     private String firstName;
+    @Column(nullable = false,name="last_name")
     private String lastName;
-    @Column(length = 300)
+    @Lob
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false,name="user_type")
     private Integer userType;
 
     public Profile(Integer id, String username, String firstName, String lastName, String password, Integer userType) {

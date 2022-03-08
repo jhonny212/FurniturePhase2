@@ -10,11 +10,14 @@ public class Piece {
     @Column(name = "id_piece")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private double price;
+    @Column(nullable = false)
     private Integer stock;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_category")
+    @JoinColumn(name = "id_category",nullable = false)
     private Piece piece;
 
     public Piece(Integer id, String name, double price, Integer stock, Piece piece) {

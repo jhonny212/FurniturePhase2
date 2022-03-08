@@ -8,21 +8,28 @@ import java.util.Date;
 public class Furniture {
     @Id
     private Integer code;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private double price;
+    @Column(nullable = false)
     private double cost;
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false,name="creation_date")
     private java.util.Date creationDate;
     @Lob
+    @Column(nullable = false)
     private String description;
     @Lob
+    @Column(nullable = false)
     private String path;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user",nullable = false)
     private Profile profile;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_plan")
+    @JoinColumn(name = "id_plan",nullable = false)
     private Plan plan;
+    @Column(nullable = false)
     private Integer status;
 
     public Furniture(Integer code, String name, double price, double cost, Date creationDate, String description, String path, Profile profile, Plan plan, Integer status) {

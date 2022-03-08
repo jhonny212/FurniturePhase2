@@ -11,18 +11,20 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private java.util.Date dateTime;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user",nullable = false)
     private Profile profile;
+    @Column(nullable = false)
     private double total;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nit")
+    @JoinColumn(name = "nit",nullable = false)
     private Client client;
 
     public Bill(){}
 
-    public Bill(Integer id, Date date_time, Profile profile, Integer nit, double total,Client client) {
+    public Bill(Integer id, Date date_time, Profile profile, double total,Client client) {
         this.id = id;
         this.dateTime = date_time;
         this.profile = profile;

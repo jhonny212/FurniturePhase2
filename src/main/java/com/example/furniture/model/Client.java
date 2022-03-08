@@ -9,7 +9,9 @@ public class Client {
     @Column(name = "id_client")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String address;
 
     public Client(Integer id, String name, String address) {

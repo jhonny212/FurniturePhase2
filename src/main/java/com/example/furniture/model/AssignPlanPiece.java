@@ -9,11 +9,12 @@ public class AssignPlanPiece {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_plan")
+    @JoinColumn(name = "id_plan",nullable = false)
     private Plan plan;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_piece")
+    @JoinColumn(name = "id_piece",nullable=false)
     private Piece piece;
+    @Column(nullable=false)
     private Integer amount;
 
     public AssignPlanPiece(Integer id, Plan plan, Piece piece, Integer amount) {
