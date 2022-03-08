@@ -24,7 +24,8 @@ public class categoryController {
         boolean bol = validationService.validate(category);
         if (bol) {
             return this.categoryServiceImp.createCategory(category);
-        } 
+        }
+        category.msj="Complete todos los campos"; 
         return category;
     }
 
