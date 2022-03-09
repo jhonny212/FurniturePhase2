@@ -1,5 +1,7 @@
 package com.example.furniture.serviceImp.fabricate;
 
+import java.util.List;
+
 import com.example.furniture.model.Category;
 import com.example.furniture.repository.fabricate.CategoryRepository;
 import com.example.furniture.service.fabricate.CategoryService;
@@ -22,5 +24,16 @@ public class CategoryServiceImp implements CategoryService{
             return category;
         }
     }
-    
+
+    @Override
+    public List<Category> getAllCategories() {
+        return this.categoryRepository.findAll();
+    }
+
+    @Override
+    public List<Category> getAllCategories(String filter) {
+        return this.categoryRepository.findAllByNameContains(filter);
+    }
+
+
 }
