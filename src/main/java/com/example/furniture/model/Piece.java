@@ -1,10 +1,16 @@
 package com.example.furniture.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "piece")
-public class Piece {
+public class Piece implements Serializable {
 
     @Id
     @Column(name = "id_piece")
@@ -18,18 +24,34 @@ public class Piece {
     private Integer stock;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_category",nullable = false)
-    private Piece piece;
+    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+    private Category category;
+    @Transient
+    public String msj="";
+    @Transient
+    public double cost=0;
 
-    public Piece(Integer id, String name, double price, Integer stock, Piece piece) {
+    public Piece(Integer id, String name, double price, Integer stock, Category piece) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
-        this.piece = piece;
+    }
+
+    public Piece(String msj){
+        this.msj = msj;
     }
 
     public Piece() {
 
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     @Override
@@ -39,7 +61,7 @@ public class Piece {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", stock=" + stock +
-                ", piece=" + piece +
+                ", category=" + category +
                 '}';
     }
 
@@ -75,11 +97,11 @@ public class Piece {
         this.stock = stock;
     }
 
-    public Piece getPiece() {
-        return piece;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -1,9 +1,11 @@
 package com.example.furniture.model;
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category implements Serializable{
     @Id
     @Column(name = "id_category")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
