@@ -13,7 +13,7 @@ public class StockPiece {
     @Column(nullable = false)
     private double cost;
     @Column(nullable = false)
-    private char status;
+    private int status;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_piece",nullable = false)
     private Piece piece;
@@ -30,7 +30,7 @@ public class StockPiece {
 
     public StockPiece(){}
 
-    public StockPiece(Integer id, double cost, char status, Piece piece) {
+    public StockPiece(Integer id, double cost, int status, Piece piece) {
         this.id = id;
         this.cost = cost;
         this.status = status;
@@ -53,11 +53,11 @@ public class StockPiece {
         this.cost = cost;
     }
 
-    public char getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(char status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
