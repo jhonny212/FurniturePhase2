@@ -1,10 +1,11 @@
 package com.example.furniture.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "stock_piece")
-public class StockPiece {
+public class StockPiece implements Serializable {
 
     @Id
     @Column(name = "id_sotck_piece")

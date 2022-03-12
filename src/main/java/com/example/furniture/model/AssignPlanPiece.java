@@ -1,10 +1,11 @@
 package com.example.furniture.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "assign_plan_piece")
-public class AssignPlanPiece {
+public class AssignPlanPiece implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -1,10 +1,13 @@
 package com.example.furniture.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.io.Serializable;
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "profile")
-public class Profile {
+public class Profile implements Serializable{
     @Id
     @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

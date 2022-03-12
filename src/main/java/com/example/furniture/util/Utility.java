@@ -11,6 +11,7 @@ public class Utility {
     public static String saveFile(MultipartFile multiPart, String ruta) {
         // Obtenemos el nombre original del archivo.
         String nombreOriginal = multiPart.getOriginalFilename();
+        System.out.println(nombreOriginal);
         try {
             // Formamos el nombre del archivo para guardarlo en el disco duro.
             File imageFile = new File(ruta+ nombreOriginal);

@@ -1,11 +1,14 @@
 package com.example.furniture.model;
 
-import javax.persistence.*;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "furniture")
-public class Furniture {
+public class Furniture implements Serializable {
     @Id
     private Integer code;
     @Column(nullable = false)

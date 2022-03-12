@@ -1,11 +1,12 @@
 package com.example.furniture.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "bill")
-public class Bill {
+public class Bill implements Serializable {
     @Id
     @Column(name = "id_bill")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

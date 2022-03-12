@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
-@RequestMapping("/furniture")
+@RequestMapping("/fabricate/furniture")
 public class furnitureController {
 
     @Autowired
@@ -24,14 +24,14 @@ public class furnitureController {
     private Utility utilityService;
 
     @PostMapping("/register-furniture")
-    public Furniture registerFurniture(@RequestBody Furniture furniture){
+    public Furniture registerFurniture(@RequestBody Furniture furniture, @RequestParam("name") String dad){
 
-////        System.out.println(multiPart);
-        System.out.println(furniture);
-////        System.out.println(obj.toString());
-////        System.out.println(multiPart.toString());
-////        utilityService.saveFile(multiPart,"../resources/img/");
-        return this.furnitureServiceImp.postFurniture(furniture);
+//        System.out.println(multiPart);
+        System.out.println(dad);
+//        System.out.println(multiPart.toString());
+//        utilityService.saveFile(multiPart,"../resources/img/");
+        return furniture;
+//        return this.furnitureServiceImp.postFurniture(furniture);
     }
 
     @GetMapping("/get-furniture")
