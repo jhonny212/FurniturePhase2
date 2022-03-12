@@ -32,6 +32,8 @@ public class Furniture implements Serializable {
     private Plan plan;
     @Column(nullable = false)
     private Integer status;
+    @Transient
+    public String msj="";
 
     public Furniture(Integer code, String name, double price, double cost, Date creationDate, String description, String path, Profile profile, Plan plan, Integer status) {
         this.code = code;

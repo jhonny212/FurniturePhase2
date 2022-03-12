@@ -1,20 +1,31 @@
 package com.example.furniture.controller.fabricate;
 
 import com.example.furniture.model.Furniture;
+import com.example.furniture.model.Plan;
+import com.example.furniture.model.Profile;
 import com.example.furniture.service.fabricate.FurnitureService;
 import com.example.furniture.serviceImp.fabricate.FurnitureServiceImp;
 import com.example.furniture.util.Utility;
 import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/fabricate/furniture")
 public class furnitureController {
+
+    UUID uuid = UUID.randomUUID();
 
     @Autowired
     private FurnitureServiceImp furnitureServiceImp;
@@ -24,22 +35,82 @@ public class furnitureController {
     private Utility utilityService;
 
     @PostMapping("/register-furniture")
-    public Furniture registerFurniture(@RequestBody Furniture furniture, @RequestParam("name") String dad){
+    public Furniture registerFurniture(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("code") Integer code,
+            @RequestParam("name") String name,
+            @RequestParam("price") String price,
+            @RequestParam("cost") String cost,
+            @RequestParam("creationDate") String creationDate,
+            @RequestParam("description") String description,
+            @RequestParam("path") String path,
+            @RequestParam("profile") String profile,
+            @RequestParam("plan") String plan
+    ) throws ParseException {
 
-//        System.out.println(multiPart);
-        System.out.println(dad);
-//        System.out.println(multiPart.toString());
-//        utilityService.saveFile(multiPart,"../resources/img/");
-        return furniture;
-//        return this.furnitureServiceImp.postFurniture(furniture);
+        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
+        Date date2=formatter2.parse(creationDate);
+        Furniture furniture = new Furniture(code, name, Double.parseDouble(price), Double.parseDouble(cost), date2, description, path,
+                new Profile(Integer.parseInt(profile), null, null, null, null, null),
+                new Plan(Integer.parseInt(plan), null, null, true), 0);
+
+        if (this.furnitureServiceImp.isExisteFurniture(code)){
+            furniture.msj = "Ya existe un Mueble con el mismo Codigo";
+            return furniture;
+        }
+
+        if(!file.isEmpty()){
+            String nameFile = utilityService.saveFile(file,"src/main/resources/img/");
+            furniture.setPath(nameFile);
+        }else{
+            furniture.setPath(null);
+        }
+
+        return this.furnitureServiceImp.postFurniture(furniture);
     }
 
     @GetMapping("/get-furniture")
-    public String getFurniture(
-            @RequestParam Optional<String> filter
+    public Furniture getFurniture(
+            @RequestParam Optional<Integer> code
     ){
-        System.out.println("Dio");
-        return furnitureServiceImp.getFurniture(filter.get());
+        return furnitureServiceImp.getFurniture(code.get());
+//        return null;
     }
 
+    @GetMapping("/get-allFurniture")
+    public Page<Furniture> getAllFuniture(
+            @RequestParam Optional<String> filter,
+            @RequestParam Optional<Integer> page
+    ){
+        if (filter.isPresent()){
+            return this.furnitureServiceImp.getAllFurniture(filter, page);
+        }
+        return this.furnitureServiceImp.getAllFurniture(page);
+    }
+
+    @GetMapping("/get-allFurniture-filter")
+    public Page<Furniture> getAllFunitureFilter(
+            @RequestParam Optional<String> date1,
+            @RequestParam Optional<String> date2,
+            @RequestParam Optional<Integer> sort,
+            @RequestParam Optional<Integer> page
+    ) throws ParseException {
+        if (sort.isPresent()){
+            SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
+            Date dates1=formatter1.parse(date1.get());
+            SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
+            Date dates2=formatter2.parse(date2.get());
+            Optional<Date> d1 = Optional.of(dates1);
+            Optional<Date> d2 = Optional.of(dates2);
+            System.out.println(d1.get());
+            return this.furnitureServiceImp.getAllFurnitureFilter(d1,d2,sort, page);
+        }
+        return this.furnitureServiceImp.getAllFurniture(page);
+    }
+
+//    @GetMapping("/get-allFurniture/{filter}")
+//    public List<Furniture> getAllFuniture(@RequestParam Optional<String> filter){
+//
+//
+//    }
 }
