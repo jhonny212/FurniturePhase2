@@ -17,11 +17,9 @@ public class Furniture {
     @Temporal(TemporalType.DATE)
     @Column(nullable = false,name="creation_date")
     private java.util.Date creationDate;
-    @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
-    @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String path;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user",nullable = false)

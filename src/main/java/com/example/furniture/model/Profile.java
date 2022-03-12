@@ -15,8 +15,8 @@ public class Profile {
     private String firstName;
     @Column(nullable = false,name="last_name")
     private String lastName;
-    @Lob
-    @Column(nullable = false)
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
     @Column(nullable = false,name="user_type")
     private Integer userType;
