@@ -24,6 +24,7 @@ public class PieceServiceImp implements PieceService {
             if (tmp.getStock() > 0){
                 this.stockPieceServiceImp.addInStock(piece);
             }
+            tmp.msj = "Pieza registrada";
             return tmp;
         } catch (DataIntegrityViolationException e) {
             piece.msj ="Error al crear pieza, intente de nuevo";
@@ -43,6 +44,8 @@ public class PieceServiceImp implements PieceService {
 
     @Override
     public Piece updatePiece(Piece piece) {
-        return this.pieceRepository.save(piece);
+        Piece tmp= this.pieceRepository.save(piece);
+        tmp.msj = "Pieza actualizada";
+        return tmp;
     }
 }

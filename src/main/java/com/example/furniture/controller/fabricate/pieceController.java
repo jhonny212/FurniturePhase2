@@ -19,8 +19,8 @@ public class pieceController {
     @PostMapping("/register-piece")
     public Piece createPiece(@RequestBody Piece piece){
         if(validationService.validate(piece)){
-            if (piece.cost <=0){
-                piece.msj = "Ingrese un costo mayor a 0";
+            if (piece.cost <=0 || piece.getPrice()<=0){
+                piece.msj = "Ingrese un costo o precio mayor a 0";
                 return piece;
             }
             return pieceServiceImp.createPiece(piece);
@@ -31,12 +31,19 @@ public class pieceController {
 
     @PostMapping("/update-piece")
     public Piece updatePiece(@RequestBody Piece piece){
-        Piece tmp = this.pieceServiceImp.getPieceById(piece.getId());
-        if (tmp == null) {
-            return new Piece("No existe la pieza");
+        piece.setCost(0);
+        if(validationService.validate(piece)){
+            if ( piece.getPrice()<=0){
+                piece.msj = "Ingrese un  precio mayor a 0";
+                return piece;
+            }
+            Piece tmp = this.pieceServiceImp.getPieceById(piece.getId());
+            if (tmp == null) {
+                return new Piece("No existe la pieza");
+            }
+            return this.pieceServiceImp.updatePiece(tmp);
         }
-        this.validationService.updateVal(tmp, piece);
-        return this.pieceServiceImp.updatePiece(tmp);
+        return new Piece("Complete los campos");
     }
 
     @GetMapping("/get-piece/{id}")
