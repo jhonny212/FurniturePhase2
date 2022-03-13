@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
@@ -115,7 +112,10 @@ public class furnitureController {
 //    }
 
     @PutMapping("/put-furniture-on-sale/{id}")
-    public String putFurnitureOnSale(@PathVariable(name = "id") int id){
-        return this.furnitureServiceImp.updateFurniture(id);
+    public Object putFurnitureOnSale(@PathVariable(name = "id") int id){
+        HashMap<String,String> response= new HashMap<>();
+        String msj = this.furnitureServiceImp.updateFurniture(id);
+        response.put("msj",msj);
+        return response;
     }
 }

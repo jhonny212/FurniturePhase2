@@ -91,11 +91,11 @@ public class FurnitureServiceImp implements FurnitureService {
             tmp.get().setStatus(2);
             Furniture tmp2 = this.postFurniture(tmp.get());
             if (!(tmp2.msj.isBlank() || tmp2.msj.isEmpty())){
-                return "{msj:\"Error al poner mueble en venta intente de nuevo\"}";
+                return "Error al poner mueble en venta intente de nuevo";
             }
-            return "{msj:\"Mueble en ventas\"}";
+            return "1";
         }else{
-            return "{msj:\"El mueble no existe\"}";
+            return "El mueble no existe";
         }
     }
 
