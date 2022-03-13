@@ -113,4 +113,9 @@ public class furnitureController {
 //
 //
 //    }
+
+    @PutMapping("/put-furniture-on-sale/{id}")
+    public String putFurnitureOnSale(@PathVariable(name = "id") int id){
+        return this.furnitureServiceImp.updateFurniture(id);
+    }
 }
