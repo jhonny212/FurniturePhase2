@@ -16,4 +16,5 @@ public interface FurnitureService {
 
     public Page<Furniture> getAllFurnitureFilter(Optional<Date> date1, Optional<Date> date2, Optional<Integer> sort, Optional<Integer> page);
 
+    public String updateFurniture(Integer id);
 }

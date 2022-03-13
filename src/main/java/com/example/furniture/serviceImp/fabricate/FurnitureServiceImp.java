@@ -80,4 +80,23 @@ public class FurnitureServiceImp implements FurnitureService {
         return false;
     }
 
+    public Optional<Furniture> searchFurniture(Integer id){
+        return this.furnitureRepository.findById(id);
+    }
+
+    @Override
+    public String updateFurniture(Integer id) {
+        Optional<Furniture> tmp = this.searchFurniture(id);
+        if (tmp.isPresent()) {
+            tmp.get().setStatus(2);
+            Furniture tmp2 = this.postFurniture(tmp.get());
+            if (!(tmp2.msj.isBlank() || tmp2.msj.isEmpty())){
+                return "{msj:\"Error al poner mueble en venta intente de nuevo\"}";
+            }
+            return "{msj:\"Mueble en ventas\"}";
+        }else{
+            return "{msj:\"El mueble no existe\"}";
+        }
+    }
+
 }
