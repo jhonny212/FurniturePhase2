@@ -52,8 +52,8 @@ public class pieceController {
     }
 
     @GetMapping("/get-all")
-    public Page<Piece> getAllPieces(@RequestParam Optional<Integer> page, @RequestParam Optional<String> name){
-        return this.pieceServiceImp.getAllPieces(page, name);
+    public Page<Piece> getAllPieces(@RequestParam Optional<Integer> page,@RequestParam Optional<String> name){
+        return this.pieceServiceImp.getAllPieces(page,name);
     }
 
     @DeleteMapping("/delete/{id}")
