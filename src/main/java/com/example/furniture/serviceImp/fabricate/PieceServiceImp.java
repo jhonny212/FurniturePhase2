@@ -1,12 +1,13 @@
 package com.example.furniture.serviceImp.fabricate;
 
 import java.util.Optional;
-
 import com.example.furniture.model.Piece;
 import com.example.furniture.repository.fabricate.PieceRepository;
 import com.example.furniture.service.fabricate.PieceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,4 +46,21 @@ public class PieceServiceImp implements PieceService {
     public Piece updatePiece(Piece piece) {
         return this.pieceRepository.save(piece);
     }
+
+    @Override
+    public Page<Piece> getAllPieces(Optional<Integer> pageNumber, Optional<String> name){
+        return this.pieceRepository.findByNameContains(
+                name.orElse(""),
+                PageRequest.of(
+                        pageNumber.orElse(0),5
+                )
+        );
+    }
+
+    @Override
+    public boolean deletePiece(Integer id){
+        this.pieceRepository.deleteById(id);
+        return this.pieceRepository.existsById(id);
+    }
+
 }

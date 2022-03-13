@@ -9,4 +9,5 @@ public interface CategoryService {
     public Category createCategory(Category category);
     public List<Category> getAllCategories();
     public List<Category> getAllCategories(String filter);
+    public boolean deleteCategory(Integer id);
 }
