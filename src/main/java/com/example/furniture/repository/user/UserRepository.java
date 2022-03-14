@@ -1,9 +1,9 @@
-package com.example.furniture.repository.profile;
+package com.example.furniture.repository.user;
 
 import com.example.furniture.model.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProfileRepository extends JpaRepository<Profile,Integer> {
+public interface UserRepository extends JpaRepository<Profile,Integer> {
 
     public Profile findByUsername(String username);
 }
