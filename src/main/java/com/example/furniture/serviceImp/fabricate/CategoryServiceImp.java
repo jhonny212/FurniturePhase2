@@ -35,5 +35,10 @@ public class CategoryServiceImp implements CategoryService{
         return this.categoryRepository.findAllByNameContains(filter);
     }
 
+    @Override
+    public boolean deleteCategory(Integer id){
+        this.categoryRepository.deleteById(id);
+        return this.categoryRepository.existsById(id);
+    }
 
 }

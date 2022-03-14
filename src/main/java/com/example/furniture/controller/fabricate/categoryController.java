@@ -6,6 +6,7 @@ import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,17 @@ public class categoryController {
             return this.categoryServiceImp.getAllCategories(filter.get());
         }
         return this.categoryServiceImp.getAllCategories();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public HashMap<String,String> deleteCategory(@PathVariable("id") Integer id){
+        HashMap<String,String> response = new HashMap<>();
+        if(this.categoryServiceImp.deleteCategory(id)){
+            response.put("msj","Se ha eliminado con éxito.");
+        }else{
+            response.put("msj","Ha ocurrido un error por lo que no se ha eliminado la categoria");
+        }
+        return response;
     }
 
 }
