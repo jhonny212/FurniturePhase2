@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -62,13 +64,14 @@ public class FurnitureServiceImp implements FurnitureService {
         );
     }
     @Override
-    public Page<Furniture> getAllFurnitureFilter(Optional<Date> date1, Optional<Date> date2, Optional<Integer> sort, Optional<Integer> page){
-        Sort s = Sort.by("name").descending();
-        if (sort.get()==1){
-            s = Sort.by("name").ascending();
+    public Page<Furniture> getAllFurnitureFilter(Optional<Date> date1, Optional<Date> date2, Optional<Integer> sort, Optional<Integer> page) throws ParseException {
+        Sort s = Sort.by("name").ascending();
+        if (!sort.isEmpty() && sort.get()==0){
+            s = Sort.by("name").descending();
         }
 
-        return this.furnitureRepository.findByCreationDateBetween(date1.get(),date2.get(),
+        return this.furnitureRepository.findByCreationDateBetween(date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
+                date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01")),
                 PageRequest.of(page.orElse(0), 10, s ));
     }
 

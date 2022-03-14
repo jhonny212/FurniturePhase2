@@ -70,8 +70,11 @@ public class furnitureController {
     public Furniture getFurniture(
             @RequestParam Optional<Integer> code
     ){
-        return furnitureServiceImp.getFurniture(code.get());
-//        return null;
+        if(this.furnitureServiceImp.isExisteFurniture(code.get())){
+            return furnitureServiceImp.getFurniture(code.get());
+        }
+
+        return new Furniture();
     }
 
     @GetMapping("/get-allFurniture")
@@ -92,24 +95,24 @@ public class furnitureController {
             @RequestParam Optional<Integer> sort,
             @RequestParam Optional<Integer> page
     ) throws ParseException {
-        if (sort.isPresent()){
-            SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
-            Date dates1=formatter1.parse(date1.get());
-            SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
-            Date dates2=formatter2.parse(date2.get());
-            Optional<Date> d1 = Optional.of(dates1);
-            Optional<Date> d2 = Optional.of(dates2);
-            System.out.println(d1.get());
-            return this.furnitureServiceImp.getAllFurnitureFilter(d1,d2,sort, page);
+        SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
+        Date dates1 = formatter1.parse("0001-01-01");
+        Date dates2 = formatter2.parse("2100-01-01");
+        if (!date1.isEmpty()){
+            dates1 = formatter1.parse(date1.get());
         }
-        return this.furnitureServiceImp.getAllFurniture(page);
+
+        if (!date2.isEmpty()){
+            dates2 = formatter2.parse(date2.get());
+        }
+
+        Optional<Date> d1 = Optional.of(dates1);
+        Optional<Date> d2 = Optional.of(dates2);
+
+        return this.furnitureServiceImp.getAllFurnitureFilter(d1,d2,sort, page);
     }
 
-//    @GetMapping("/get-allFurniture/{filter}")
-//    public List<Furniture> getAllFuniture(@RequestParam Optional<String> filter){
-//
-//
-//    }
 
     @PutMapping("/put-furniture-on-sale/{id}")
     public Object putFurnitureOnSale(@PathVariable(name = "id") int id){
