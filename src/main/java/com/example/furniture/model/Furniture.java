@@ -46,10 +46,15 @@ public class Furniture implements Serializable {
         this.profile = profile;
         this.plan = plan;
         this.status = status;
+        this.msj = "";
     }
 
-    public Furniture(){}
-
+    public Furniture(){
+        this.msj = "";
+    }
+    public Furniture(String msj){
+        this.msj = msj;
+    }
     @Override
     public String toString() {
         return "Furniture{" +

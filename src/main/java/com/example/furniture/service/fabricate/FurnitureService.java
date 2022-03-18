@@ -18,4 +18,6 @@ public interface FurnitureService {
     public Page<Furniture> getAllFurnitureFilter(Optional<Date> date1, Optional<Date> date2, Optional<Integer> sort, Optional<Integer> page) throws ParseException;
 
     public String updateFurniture(Integer id);
+
+    public Optional<Furniture> getFurnitureById(Integer id);
 }

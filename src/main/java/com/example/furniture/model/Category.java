@@ -14,8 +14,11 @@ public class Category implements Serializable{
     private String name;
     @Transient
     public String msj="";
-    public Category(){}
+    public Category(){
+        this.msj = "";
+    }
     public Category(String name){
+        this.msj = "";
         this.name= name;
     }
 
