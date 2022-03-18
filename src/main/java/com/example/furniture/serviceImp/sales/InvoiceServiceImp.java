@@ -40,7 +40,6 @@ public class InvoiceServiceImp implements InvoiceService {
     @Override
     public Page<BillDetails> getReturnClient(Optional<Integer> nit, Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
 
-//        return this.billDetailsRepository.findAllByBill_ClientAndBill_DateTimeNotNull();
         try {
             return this.billDetailsRepository.findAllByBill_Client_IdAndDateReturnNotNullAndDateReturnBetween(
                     nit.get(),
