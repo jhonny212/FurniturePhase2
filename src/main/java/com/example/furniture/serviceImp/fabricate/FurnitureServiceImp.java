@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.awt.print.Pageable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,8 @@ public class FurnitureServiceImp implements FurnitureService {
 
     @Override
     public Furniture getFurniture(Integer id){
-        return this.furnitureRepository.getById(id);
+        Optional<Furniture> tmp = this.furnitureRepository.findById(id);
+        return tmp.orElseGet(() -> new Furniture("No existe el mueble"));
     }
 
     @Override
@@ -100,6 +102,13 @@ public class FurnitureServiceImp implements FurnitureService {
         }else{
             return "El mueble no existe";
         }
+    }
+
+    @Override
+    public Optional<Furniture> getFurnitureById(Integer id){
+        LocalDate todaysDate = LocalDate.now();
+
+        return null;
     }
 
 }
