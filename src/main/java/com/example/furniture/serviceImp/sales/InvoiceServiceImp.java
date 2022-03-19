@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -55,4 +57,31 @@ public class InvoiceServiceImp implements InvoiceService {
             );
         }
     }
+
+    @Override
+    public Page<BillDetails> getSalesToday(Optional<Date> date1, Optional<Integer> page){
+        return this.billDetailsRepository.findAllByBill_DateTime(date1.get(), PageRequest.of(page.orElse(0), 25));
+    }
+
+    @Override
+    public Page<Bill> getBills(Optional<String> client, Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
+
+        try {
+            return this.billRepository.findByClient_NameContainsAndDateTimeBetween(
+                    client.get(),
+                    date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
+                    date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01")),
+                    PageRequest.of(page.orElse(0), 25)
+            );
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Page<BillDetails> getBillsDetailsOfBill(Optional<Integer> idBill, Optional<Integer> page){
+        return null;
+    }
+
+
 }
