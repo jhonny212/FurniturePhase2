@@ -5,11 +5,14 @@ import com.example.furniture.model.Client;
 import com.example.furniture.model.Furniture;
 import com.example.furniture.repository.fabricate.FurnitureRepository;
 import com.example.furniture.repository.sales.BillDetailsRepository;
+import com.example.furniture.repository.sales.BillRepository;
 import com.example.furniture.service.sales.SaleFurnitureService;
 import com.example.furniture.serviceImp.fabricate.FurnitureServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +21,8 @@ import java.util.Optional;
 public class SaleFurnitureServiceImp implements SaleFurnitureService {
     @Autowired
     private BillDetailsRepository billDetailsRepository;
+    @Autowired
+    private BillRepository billRepository;
     @Autowired
     private FurnitureRepository furnitureRepository;
 
@@ -57,5 +62,16 @@ public class SaleFurnitureServiceImp implements SaleFurnitureService {
     @Override
     public Object getClientByIdBill(int id){
         return billDetailsRepository.findClient(id);
+    }
+
+
+    public Object getEarningsTotal(Optional<Date> date1, Optional<Date> date2) throws ParseException {
+
+        Object obj = this.billDetailsRepository.findEarnings(
+                date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
+                date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01"))
+        );
+
+        return obj;
     }
 }

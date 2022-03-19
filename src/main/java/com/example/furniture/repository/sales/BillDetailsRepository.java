@@ -3,6 +3,7 @@ package com.example.furniture.repository.sales;
 import com.example.furniture.model.Bill;
 import com.example.furniture.model.BillDetails;
 import com.example.furniture.model.Client;
+import com.example.furniture.util.EarningTotal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.example.furniture.model.BillDetails;
@@ -38,6 +39,17 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
             "on b.nit = cl.id_client\n" +
             "where b.id_bill = ?;",nativeQuery = true)
     Object findClient(int id);
+
+    @Query(value = "SELECT \n" +
+            "\tSUM(billd.price_sale) AS sales, \n" +
+            "\tSUM(billd.cost_lost) AS lost, \n" +
+            "\t(SUM(billd.price_sale) - SUM(billd.cost_lost)) AS earnings \n" +
+            "\tFROM \"bill_details\" AS billd \n" +
+            "\tLEFT JOIN \"bill\" AS bill \n" +
+            "\tON billd.id_bill=bill.id_bill \n" +
+            "\tWHERE \n" +
+            "\tbill.datetime BETWEEN ? AND ?;",nativeQuery = true)
+    Object findEarnings(Date date1, Date date2);
 
     Page<BillDetails> findAllByBill_Id(Integer id_bill,Pageable pageable);
     Page<BillDetails> findAllByBill_Client_Id(Integer nit, Pageable pageable);
