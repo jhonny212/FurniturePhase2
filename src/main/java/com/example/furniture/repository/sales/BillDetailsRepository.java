@@ -43,11 +43,13 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
     @Query(value = "SELECT \n" +
             "\tSUM(billd.price_sale) AS sales, \n" +
             "\tSUM(billd.cost_lost) AS lost, \n" +
-            "\t(SUM(billd.price_sale) - SUM(billd.cost_lost)) AS earnings \n" +
+            "\tSUM(f.cost) AS costs,\n" +
+            "\t(SUM(billd.price_sale) - SUM(f.cost) - SUM(billd.cost_lost)) AS earnings \n" +
             "\tFROM \"bill_details\" AS billd \n" +
             "\tLEFT JOIN \"bill\" AS bill \n" +
             "\tON billd.id_bill=bill.id_bill \n" +
-            "\tWHERE \n" +
+            "\tLEFT JOIN \"furniture\" AS f ON f.code=billd.id_furniture\n" +
+            "\tWHERE" +
             "\tbill.datetime BETWEEN ? AND ?;",nativeQuery = true)
     Object findEarnings(Date date1, Date date2);
 
