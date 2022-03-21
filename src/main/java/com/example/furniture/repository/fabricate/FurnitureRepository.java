@@ -13,7 +13,6 @@ import java.util.List;
 public interface FurnitureRepository extends JpaRepository<Furniture,Integer> {
 
     Page<Furniture> findByNameContains(String name, Pageable page);
-
     Page<Furniture> findByCreationDateBetween(Date date1, Date date2, Pageable page);
-
+    Page<Furniture> findByStatus(Integer status, Pageable page);
 }

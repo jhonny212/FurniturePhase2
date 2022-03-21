@@ -102,4 +102,19 @@ public class FurnitureServiceImp implements FurnitureService {
         }
     }
 
+    @Override
+    public List<Furniture> getFurnituresOnSession() {
+        return null;
+    }
+
+    @Override
+    public boolean removeFurnitureFromBil() {
+        return false;
+    }
+
+    @Override
+    public boolean addFurnitureToBill() {
+        return false;
+    }
+
 }

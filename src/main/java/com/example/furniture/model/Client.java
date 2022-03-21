@@ -7,16 +7,16 @@ import java.io.Serializable;
 @Table(name = "client")
 public class Client implements Serializable {
     @Id
-    @Column(name = "id_client")
+    @Column(name = "nit")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer nit;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String address;
 
-    public Client(Integer id, String name, String address) {
-        this.id = id;
+    public Client(Integer nit, String name, String address) {
+        this.nit = nit;
         this.name = name;
         this.address = address;
     }
@@ -26,18 +26,18 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
+                    "nit=" + nit +
+                    ", name='" + name + '\'' +
+                    ", address='" + address + '\'' +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getNit() {
+        return nit;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNit(Integer nit) {
+        this.nit = nit;
     }
 
     public String getName() {

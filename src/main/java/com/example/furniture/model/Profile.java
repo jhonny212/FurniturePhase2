@@ -23,6 +23,8 @@ public class Profile implements Serializable{
     private String password;
     @Column(nullable = false,name="user_type")
     private Integer userType;
+    @Transient
+    private String token;
 
     public Profile(Integer id, String username, String firstName, String lastName, String password, Integer userType) {
         this.id = id;
@@ -94,4 +96,8 @@ public class Profile implements Serializable{
     public void setUserType(Integer userType) {
         this.userType = userType;
     }
+
+    public String getToken() { return token; }
+
+    public void setToken(String token) { this.token = token; }
 }
