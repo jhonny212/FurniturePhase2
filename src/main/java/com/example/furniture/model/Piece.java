@@ -36,6 +36,7 @@ public class Piece implements Serializable {
         this.name = name;
         this.price = price;
         this.stock = stock;
+        this.msj = "";
     }
 
     public Piece(String msj){
@@ -43,7 +44,7 @@ public class Piece implements Serializable {
     }
 
     public Piece() {
-
+        this.msj = "";
     }
 
     public double getCost() {

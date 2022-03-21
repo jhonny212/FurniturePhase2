@@ -11,16 +11,18 @@ public class BillDetails implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_bill",nullable = false)
+    @JoinColumn(name = "id_bill")
     private Bill bill;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_furniture",nullable = false)
     private Furniture furniture;
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false,name="date_return")
+    @Column(name="date_return")
     private java.util.Date dateReturn;
     @Column(nullable = false,name="price_sale")
     private double priceSale;
+    @Column(name = "cost_lost",columnDefinition = "double precision default 0")
+    private double costLost;
 
     public BillDetails(Integer id, Bill bill, Furniture furniture, Date dateReturn, double priceSale) {
         this.id = id;
@@ -28,9 +30,19 @@ public class BillDetails implements Serializable {
         this.furniture = furniture;
         this.dateReturn = dateReturn;
         this.priceSale = priceSale;
+        costLost = 0;
+    }
+    public BillDetails(Integer id, Bill bill, Furniture furniture, double priceSale) {
+        this.id = id;
+        this.bill = bill;
+        this.furniture = furniture;
+        this.priceSale = priceSale;
+        costLost = 0;
     }
 
-    public BillDetails(){}
+    public BillDetails(){
+        costLost = 0;
+    }
 
     @Override
     public String toString() {
@@ -41,6 +53,14 @@ public class BillDetails implements Serializable {
                 ", dateReturn=" + dateReturn +
                 ", priceSale=" + priceSale +
                 '}';
+    }
+
+    public double getCostLost() {
+        return costLost;
+    }
+
+    public void setCostLost(double costLost) {
+        this.costLost = costLost;
     }
 
     public Integer getId() {

@@ -19,4 +19,5 @@ public interface FurnitureService {
     public List<Furniture> getFurnituresOnSession();
     public boolean removeFurnitureFromBil();
     public boolean addFurnitureToBill();
+    public Optional<Furniture> getFurnitureById(Integer id);
 }
