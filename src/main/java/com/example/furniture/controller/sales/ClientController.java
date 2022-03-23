@@ -31,10 +31,11 @@ public class ClientController {
         return response;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public HashMap<String, Object> createClient(@RequestBody Client client){
         HashMap<String, Object> response = new HashMap<>();
-        if (validationService.validate(client)) response.put("created",this.clientServiceImp.createClient(client));
+        response.put("wasAdded",false);
+        if (validationService.validate(client)) response.replace("created",this.clientServiceImp.createClient(client));
         return response;
     }
 }

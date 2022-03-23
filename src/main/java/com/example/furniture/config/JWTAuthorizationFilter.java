@@ -85,7 +85,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 .builder()
                 .setId("softtekJWT")
                 .setSubject(username)
-                .claim("username",username).claim("user_type",user_type)
+                .claim("username",username)
+                .claim("user_type",user_type)
                 .claim("authorities",
                         grantedAuthorities.stream()
                                 .map(GrantedAuthority::getAuthority)
