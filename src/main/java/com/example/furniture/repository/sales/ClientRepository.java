@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepository extends JpaRepository<Client,Integer> {
 
-    public Client findClientByNit(Integer nit);
+    public Client findClientById(Integer nit);
 }

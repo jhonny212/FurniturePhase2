@@ -12,7 +12,7 @@ public class ClientServiceImp implements ClientService {
 
     @Override
     public Client getClient(int nit) {
-        return this.clientRepository.findClientByNit(nit);
+        return this.clientRepository.findClientById(nit);
     }
 
     @Override
