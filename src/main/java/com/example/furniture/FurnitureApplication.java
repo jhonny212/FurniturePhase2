@@ -1,6 +1,7 @@
 package com.example.furniture;
 
 import com.example.furniture.config.JWTAuthorizationFilter;
+import com.example.furniture.config.SimpleCORSFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
