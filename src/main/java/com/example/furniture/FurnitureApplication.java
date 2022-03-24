@@ -33,6 +33,9 @@ public class FurnitureApplication  implements CommandLineRunner {
                     .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+                    .antMatchers(HttpMethod.POST, "/user/isAdminLoggedIn").permitAll()
+                    .antMatchers(HttpMethod.POST, "/user/isFabricatemanLoggedIn").permitAll()
+                    .antMatchers(HttpMethod.POST, "/user/isSalesmanLoggedIn").permitAll()
                     .anyRequest().authenticated();
         }
     }

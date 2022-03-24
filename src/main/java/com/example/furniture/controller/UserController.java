@@ -4,6 +4,7 @@ import com.example.furniture.config.JWTAuthorizationFilter;
 import com.example.furniture.model.Profile;
 import com.example.furniture.repository.fabricate.CategoryRepository;
 import com.example.furniture.repository.user.UserRepository;
+import com.sun.istack.Nullable;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -41,26 +42,32 @@ public class UserController {
 	}
 
 	@PostMapping("/isAdminLoggedIn")
-	public boolean isAdminLoggedIn(@RequestHeader("Authorization") String token){
-		JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
-		Claims claims = jwtaf.getClaimsFromToken(token);
-		if(((Integer)claims.get("user_type")) == 0) return true;
+	public boolean isAdminLoggedIn(@RequestHeader(value = "Authorization", required=false) String token){
+		if(token != null){
+			JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
+			Claims claims = jwtaf.getClaimsFromToken(token);
+			if (((Integer) claims.get("user_type")) == 0) return true;
+		}
 		return false;
 	}
 
 	@PostMapping("/isSalesmanLoggedIn")
-	public boolean isSalesmanLoggedIn(@RequestHeader("Authorization") String token){
-		JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
-		Claims claims = jwtaf.getClaimsFromToken(token);
-		if(((Integer)claims.get("user_type")) == 1) return true;
+	public boolean isSalesmanLoggedIn(@RequestHeader(value = "Authorization", required=false) String token){
+		if(token != null){
+			JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
+			Claims claims = jwtaf.getClaimsFromToken(token);
+			if (((Integer) claims.get("user_type")) == 1) return true;
+		}
 		return false;
 	}
 
 	@PostMapping("/isFabricatemanLoggedIn")
-	public boolean isFabricatemanLoggedIn(@RequestHeader("Authorization") String token){
-		JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
-		Claims claims = jwtaf.getClaimsFromToken(token);
-		if(((Integer)claims.get("user_type")) == 2) return true;
+	public boolean isFabricatemanLoggedIn(@RequestHeader(value = "Authorization", required=false) String token){
+		if(token != null){
+			JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
+			Claims claims = jwtaf.getClaimsFromToken(token);
+			if(((Integer)claims.get("user_type")) == 2) return true;
+		}
 		return false;
 	}
 }
