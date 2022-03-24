@@ -34,6 +34,8 @@ public class Furniture implements Serializable {
     private Integer status;
     @Transient
     public String msj="";
+    @Transient
+    public double amount;
 
     public Furniture(Integer code, String name, double price, double cost, Date creationDate, String description, String path, Profile profile, Plan plan, Integer status) {
         this.code = code;
@@ -47,6 +49,21 @@ public class Furniture implements Serializable {
         this.plan = plan;
         this.status = status;
         this.msj = "";
+    }
+
+    public Furniture(Integer code, String name, double price, double cost, Date creationDate, String description, String path, Profile profile, Plan plan, Integer status, double amount) {
+        this.code = code;
+        this.name = name;
+        this.price = price;
+        this.cost = cost;
+        this.creationDate = creationDate;
+        this.description = description;
+        this.path = path;
+        this.profile = profile;
+        this.plan = plan;
+        this.status = status;
+        this.msj = "";
+        this.amount = amount;
     }
 
     public Furniture(){
@@ -149,5 +166,13 @@ public class Furniture implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }
