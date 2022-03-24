@@ -35,7 +35,7 @@ public class ClientController {
     public HashMap<String, Object> createClient(@RequestBody Client client){
         HashMap<String, Object> response = new HashMap<>();
         response.put("wasAdded",false);
-        if (validationService.validate(client)) response.replace("created",this.clientServiceImp.createClient(client));
+        if (validationService.validate(client)) response.replace("wasAdded",this.clientServiceImp.createClient(client));
         return response;
     }
 }
