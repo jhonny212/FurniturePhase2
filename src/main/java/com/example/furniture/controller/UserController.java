@@ -2,23 +2,13 @@ package com.example.furniture.controller;
 
 import com.example.furniture.config.JWTAuthorizationFilter;
 import com.example.furniture.model.Profile;
-import com.example.furniture.repository.fabricate.CategoryRepository;
 import com.example.furniture.repository.user.UserRepository;
-import com.sun.istack.Nullable;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -32,7 +22,7 @@ public class UserController {
 		Profile profile = this.userRepository.findByUsername(username);
 		if(profile != null){
 			if(profile.getPassword().equals(pwd)){
-				response.put("token",jwtaf.getJWTToken(profile.getUsername(),profile.getUserType()));
+				response.put("token",jwtaf.getJWTToken(profile.getUsername(),profile.getUserType(),profile.getId()));
 			}else{
 				response.put("msj","La contraseña ingresada no es la correcta");
 			}

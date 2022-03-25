@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/sale/furniture")
 public class SaleFurnitureController {

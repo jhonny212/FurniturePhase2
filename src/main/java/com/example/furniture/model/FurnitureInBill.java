@@ -11,7 +11,7 @@ public class FurnitureInBill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code",nullable = false)
@@ -20,10 +20,6 @@ public class FurnitureInBill implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user",nullable = false)
     private Profile profile;
-
-    public Long getId() {
-        return id;
-    }
 
     public FurnitureInBill(Furniture furniture, Profile profile) {
         this.furniture = furniture;
@@ -47,4 +43,8 @@ public class FurnitureInBill implements Serializable {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id){ this.id = id; }
 }
