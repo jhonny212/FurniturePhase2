@@ -32,6 +32,7 @@ public class BillDetails implements Serializable {
         this.priceSale = priceSale;
         costLost = 0;
     }
+
     public BillDetails(Integer id, Bill bill, Furniture furniture, double priceSale) {
         this.id = id;
         this.bill = bill;

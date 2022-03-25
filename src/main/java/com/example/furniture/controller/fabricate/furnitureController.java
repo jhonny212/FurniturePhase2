@@ -49,7 +49,7 @@ public class furnitureController {
         Date date2=formatter2.parse(creationDate);
         Furniture furniture = new Furniture(code, name, Double.parseDouble(price), Double.parseDouble(cost), date2, description, path,
                 new Profile(Integer.parseInt(profile), null, null, null, null, null),
-                new Plan(Integer.parseInt(plan), null, null, true), 0);
+                new Plan(Integer.parseInt(plan), null, null, true, null), 0);
 
         if (this.furnitureServiceImp.isExisteFurniture(code)){
             furniture.msj = "Ya existe un Mueble con el mismo Codigo";
@@ -113,12 +113,16 @@ public class furnitureController {
         return this.furnitureServiceImp.getAllFurnitureFilter(d1,d2,sort, page);
     }
 
-
     @PutMapping("/put-furniture-on-sale/{id}")
     public Object putFurnitureOnSale(@PathVariable(name = "id") int id){
         HashMap<String,String> response= new HashMap<>();
         String msj = this.furnitureServiceImp.updateFurniture(id);
         response.put("msj",msj);
         return response;
+    }
+
+    @GetMapping("/on-sale")
+    public Page<Furniture> getFurnituresOnSale(@RequestParam Optional<Integer> page, @RequestParam Optional<String> name){
+        return this.furnitureServiceImp.getFurnituresOnSale(name, page);
     }
 }

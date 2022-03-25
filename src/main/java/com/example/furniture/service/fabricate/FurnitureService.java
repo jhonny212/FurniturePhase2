@@ -2,6 +2,7 @@ package com.example.furniture.service.fabricate;
 
 import com.example.furniture.model.Furniture;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -20,4 +21,5 @@ public interface FurnitureService {
     public boolean removeFurnitureFromBil();
     public boolean addFurnitureToBill();
     public Optional<Furniture> getFurnitureById(Integer id);
+    Page<Furniture> getFurnituresOnSale(Optional<String> name, Optional<Integer> page);
 }

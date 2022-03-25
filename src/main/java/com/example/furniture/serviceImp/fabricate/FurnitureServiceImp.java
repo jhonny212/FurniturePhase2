@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.awt.print.Pageable;
 import java.text.ParseException;
@@ -124,5 +125,14 @@ public class FurnitureServiceImp implements FurnitureService {
         LocalDate todaysDate = LocalDate.now();
 
         return null;
+    }
+
+    @Override
+    public Page<Furniture> getFurnituresOnSale(Optional<String> name, Optional<Integer> page) {
+        return this.furnitureRepository.findByStatusAndNameContains(
+                1,
+                name.orElse(""),
+                PageRequest.of(page.orElse(0), 10)
+        );
     }
 }

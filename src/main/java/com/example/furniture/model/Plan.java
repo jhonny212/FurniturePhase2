@@ -1,9 +1,11 @@
 package com.example.furniture.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.expression.spel.ast.Assign;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -20,14 +22,17 @@ public class Plan implements Serializable {
     private String description;
     @Column(nullable = false)
     private boolean status;
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AssignPlanPiece> assignments;
 
     public Plan(){}
 
-    public Plan(Integer id, String name, String description, boolean status) {
+    public Plan(Integer id, String name, String description, boolean status, List<AssignPlanPiece> assignments) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
+        this.assignments = assignments;
     }
 
     public Integer getId() {
@@ -60,6 +65,14 @@ public class Plan implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<AssignPlanPiece> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<AssignPlanPiece> assignments) {
+        this.assignments = assignments;
     }
 
     @Override

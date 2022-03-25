@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "bill")
@@ -24,15 +26,18 @@ public class Bill implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nit",nullable = false)
     private Client client;
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BillDetails> details;
 
     public Bill(){}
 
-    public Bill(Integer id, Date date_time, Profile profile, double total,Client client) {
+    public Bill(Integer id, Date date_time, Profile profile, double total,Client client, List<BillDetails> details) {
         this.id = id;
         this.dateTime = date_time;
         this.profile = profile;
         this.total = total;
         this.client = client;
+        this.details = details;
     }
 
     @Override
@@ -86,5 +91,11 @@ public class Bill implements Serializable {
         this.client = client;
     }
 
-    
+    public List<BillDetails> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<BillDetails> details) {
+        this.details = details;
+    }
 }
