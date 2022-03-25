@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/sales/client")
 public class ClientController {
@@ -19,14 +18,13 @@ public class ClientController {
     private ValidationService validationService;
 
     @GetMapping("/{nit}")
-    public HashMap<String, Object> getClient(@RequestParam Integer nit){
+    public HashMap<String, Object> getClient(@PathVariable Integer nit){
         HashMap<String, Object> response = new HashMap<>();
         Client client = this.clientServiceImp.getClient(nit);
+        response.put("found",false);
         if(client != null){
             response.replace("found",true);
             response.put("client",client);
-        }else{
-            response.put("found",false);
         }
         return response;
     }
