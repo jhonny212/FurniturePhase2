@@ -42,7 +42,6 @@ public class UserController {
 		return response;
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 	@PostMapping("/isAdminLoggedIn")
 	public boolean isAdminLoggedIn(@RequestHeader(value = "Authorization", required=false) String token){
 		if(token != null){
