@@ -9,10 +9,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "client")
 public class Client implements Serializable {
-    @Id
-    @Column(name = "id_client")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "nit")
+    @Id private Integer id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -29,15 +27,13 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", address='" + address + '\'' +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
     public void setId(Integer id) {
         this.id = id;

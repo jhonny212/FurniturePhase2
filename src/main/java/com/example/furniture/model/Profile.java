@@ -22,8 +22,13 @@ public class Profile implements Serializable{
     private String password;
     @Column(nullable = false,name="user_type")
     private Integer userType;
+
     @Column(nullable = true)
     private boolean status=true;
+
+    @Transient
+    private String token;
+
 
     public Profile(Integer id, String username, String firstName, String lastName, String password, Integer userType) {
         this.id = id;
@@ -33,30 +38,27 @@ public class Profile implements Serializable{
         this.password = password;
         this.userType = userType;
         this.status=true;
+
+    }
+    public Profile(){}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public Profile(){
-        this.status=true;
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public String toString() {
-        return "Profile{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", userType=" + userType +
-                '}';
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public boolean isStatus() {
-        return status;
+    public Integer getUserType() {
+        return userType;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public Integer getId() {
@@ -87,23 +89,15 @@ public class Profile implements Serializable{
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public boolean isStatus() {
+        return status;
     }
 
-    public String getPassword() {
-        return password;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getToken() { return token; }
 
-    public Integer getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Integer userType) {
-        this.userType = userType;
-    }
+    public void setToken(String token) { this.token = token; }
 }

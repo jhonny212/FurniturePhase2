@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/admin/user")
-public class UserController {
+public class AdminUserController {
     @Autowired
     private UserServiceImp userServiceImp;
     @Autowired

@@ -34,9 +34,9 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
             "",nativeQuery = true)
     List<Object[]> findAllDetailBils(int id);
 
-    @Query(value = "select cl.name,cl.id_client,cl.address from client as cl\n" +
+    @Query(value = "select cl.name,cl.nit,cl.address from client as cl\n" +
             "inner join bill as b\n" +
-            "on b.nit = cl.id_client\n" +
+            "on b.nit = cl.nit\n" +
             "where b.id_bill = ?;",nativeQuery = true)
     Object findClient(int id);
 
@@ -59,7 +59,13 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
     Page<BillDetails> findAllByBill_Client_IdAndDateReturnNotNull(Integer nit, Pageable pageable);
     Page<BillDetails> findAllByBill_Client_IdAndDateReturnNotNullAndDateReturnBetween(Integer nit, Date date1, Date date2, Pageable pageable);
     Page<BillDetails> findAllByBill_DateTime(Date date,Pageable pageable);
+
     List<BillDetails> findByCostLostGreaterThanAndDateReturnIsBetween(double costLost,Date date1,Date date2);
     List<BillDetails> findByCostLostGreaterThan(double costLost);
+
+
+    //PARA ADMIN
+    Page<BillDetails> findAllByBill_DateTimeBetween(Date date1, Date date2, Pageable pageable);
+
 }
 

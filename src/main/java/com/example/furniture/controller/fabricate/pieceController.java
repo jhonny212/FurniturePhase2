@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import java.util.HashMap;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 @RequestMapping("/fabricate/piece")
 public class pieceController {

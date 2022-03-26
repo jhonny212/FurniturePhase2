@@ -1,42 +1,30 @@
-package com.example.furniture.controller.sales;
+package com.example.furniture.controller.admin;
 
-
-import com.example.furniture.model.Bill;
 import com.example.furniture.model.BillDetails;
-import com.example.furniture.serviceImp.sales.InvoiceServiceImp;
-import com.example.furniture.serviceImp.sales.SaleFurnitureServiceImp;
+import com.example.furniture.model.Furniture;
+import com.example.furniture.serviceImp.admin.BillServiceImp;
+import com.example.furniture.serviceImp.admin.ReportServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/sales/invoice")
-public class InvoiceController {
+@RequestMapping("/admin/report")
+public class ReportController {
 
     @Autowired
-    private InvoiceServiceImp invoiceServiceImp;
+    private BillServiceImp billServiceImp;
     @Autowired
-    private SaleFurnitureServiceImp saleFurnitureServiceImp;
+    private ReportServiceImp reportServiceImp;
 
-    @GetMapping("/get-bill-cliente")
-    public Page<BillDetails> getBillClient(
-            @RequestParam Optional<Integer> billId,
-            @RequestParam Optional<Integer> page
-    ){
-        return this.invoiceServiceImp.getBillsClient(billId, page);
-    }
-
-    @GetMapping("/get-return-client")
-    public Page<BillDetails> getReturnClient(
-            @RequestParam Optional<Integer> nit,
+    @GetMapping("/report-max-furniture-x-period")
+    public List<Furniture> getMaxFurnitureXPeriod(
             @RequestParam Optional<String> date1,
             @RequestParam Optional<String> date2,
             @RequestParam Optional<Integer> page
@@ -56,26 +44,11 @@ public class InvoiceController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.invoiceServiceImp.getReturnClient(nit, d1, d2, page);
+        return this.reportServiceImp.getReportMaxFurnitureXPeriod(d1, d2);
     }
 
-    @GetMapping("/get-sale-today")
-    public Page<BillDetails> getSalesToday(@RequestParam Optional<Integer> page) throws ParseException {
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
-//        Date date = formatter1.parse(dtf.format(LocalDateTime.now())+" 23:59:59");
-        Date date = formatter1.parse(dtf.format(LocalDateTime.now()));
-
-        Optional<Date> d1 = Optional.of(date);
-
-        return this.invoiceServiceImp.getSalesToday(d1, page);
-    }
-
-    @GetMapping("/get-sales-clients")
-    public Page<Bill> getSalesClient(
-            @RequestParam Optional<String> client,
+    @GetMapping("/report-min-furniture-x-period")
+    public List<Furniture> getMinFurnitureXPeriod(
             @RequestParam Optional<String> date1,
             @RequestParam Optional<String> date2,
             @RequestParam Optional<Integer> page
@@ -95,18 +68,14 @@ public class InvoiceController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.invoiceServiceImp.getBills(client, d1, d2, page);
+        return this.reportServiceImp.getReportMinFurnitureXPeriod(d1, d2);
     }
 
-    @GetMapping("/get-bill")
-    public Page<BillDetails> getSalesClient(@RequestParam Optional<Integer> idBill){
-        return null;
-    }
-
-    @GetMapping("/get-earnings-total")
-    public Object getEarningsTotal(
+    @GetMapping("/report-earnings-x-period")
+    public Page<BillDetails> getEarningsXPeriod(
             @RequestParam Optional<String> date1,
-            @RequestParam Optional<String> date2
+            @RequestParam Optional<String> date2,
+            @RequestParam Optional<Integer> page
     ) throws ParseException {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
@@ -123,8 +92,6 @@ public class InvoiceController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.saleFurnitureServiceImp.getEarningsTotal(d1, d2);
+        return this.billServiceImp.gerReportSalesXperiod(d1, d2, page);
     }
-
-
 }
