@@ -5,5 +5,5 @@ import com.example.furniture.model.Client;
 public interface ClientService {
 
     public Client getClient(int nit);
-    public Client createClient(Client client);
+    public boolean createClient(Client client);
 }

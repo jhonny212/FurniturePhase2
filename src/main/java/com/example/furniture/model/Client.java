@@ -9,10 +9,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "client")
 public class Client implements Serializable {
-    @Id
-    @Column(name = "id_client")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "nit")
+    @Id private Integer id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

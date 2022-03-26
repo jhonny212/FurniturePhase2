@@ -15,7 +15,7 @@ public class ValidationService {
                 try {
                     Object obj = method.invoke(classHref, null);
                     if (obj == null) {
-                        System.out.println("ERROR en"+method.getName());
+                        System.out.println("ERROR en: "+method.getName());
                         return false;
                     }
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {

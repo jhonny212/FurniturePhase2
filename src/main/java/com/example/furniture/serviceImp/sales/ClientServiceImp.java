@@ -14,11 +14,12 @@ public class ClientServiceImp implements ClientService {
 
     @Override
     public Client getClient(int nit) {
-        return this.clientRepository.findClientById(nit);
+        return this.clientRepository.findById(nit).orElse(null);
     }
 
     @Override
-    public Client createClient(Client client) {
-        return this.clientRepository.save(client);
+    public boolean createClient(Client client) {
+        this.clientRepository.save(client);
+        return this.clientRepository.existsById(client.getId());
     }
 }

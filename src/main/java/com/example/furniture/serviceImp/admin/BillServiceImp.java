@@ -1,7 +1,9 @@
 package com.example.furniture.serviceImp.admin;
 
+import com.example.furniture.model.Bill;
 import com.example.furniture.model.BillDetails;
 import com.example.furniture.repository.sales.BillDetailsRepository;
+import com.example.furniture.repository.sales.BillRepository;
 import com.example.furniture.service.admin.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,8 @@ public class BillServiceImp implements BillService {
 
     @Autowired
     private BillDetailsRepository billDetailsRepository;
+    @Autowired
+    private BillRepository billRepository;
 
     @Override
     public Page<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
@@ -31,4 +35,12 @@ public class BillServiceImp implements BillService {
             return null;
         }
     }
+
+    @Override
+    public boolean doBill(Bill bill) {
+        this.billRepository.save(bill);
+        return this.billRepository.existsById(bill.getId());
+    }
+
+
 }

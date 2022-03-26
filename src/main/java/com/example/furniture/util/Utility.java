@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -34,5 +38,13 @@ public class Utility {
             System.out.println("Error " + e.getMessage());
             return null;
         }
+    }
+
+    public Date getActualDate() {
+        LocalDate currentLocalDate = LocalDate.now();
+        ZoneId systemTimeZone = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = currentLocalDate.atStartOfDay(systemTimeZone);
+        Date utilDate = Date.from(zonedDateTime.toInstant());
+        return utilDate;
     }
 }

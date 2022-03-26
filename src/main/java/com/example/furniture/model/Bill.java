@@ -24,7 +24,7 @@ public class Bill implements Serializable {
     @Column(nullable = false)
     private double total;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nit",nullable = false)
+    @JoinColumn(name = "nit", nullable = false)
     private Client client;
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillDetails> details;
