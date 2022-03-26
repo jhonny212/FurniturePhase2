@@ -54,7 +54,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     private Claims validateToken(HttpServletRequest request) {
-        String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
+        String jwtToken = request.getHeader(HEADER);
         return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
     }
 
@@ -99,6 +99,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 .signWith(SignatureAlgorithm.HS512,
                         SECRET.getBytes()).compact();
 
-        return "Bearer " + token;
+        return token;
     }
 }
