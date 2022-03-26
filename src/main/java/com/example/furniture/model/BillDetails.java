@@ -22,7 +22,7 @@ public class BillDetails implements Serializable {
     @Column(nullable = false,name="price_sale")
     private double priceSale;
     @Column(name = "cost_lost",columnDefinition = "double precision default 0")
-    private double costLost;
+    private double costLost=0;
 
     public BillDetails(Integer id, Bill bill, Furniture furniture, Date dateReturn, double priceSale) {
         this.id = id;
