@@ -61,4 +61,14 @@ public class UserController {
 		}
 		return false;
 	}
+
+	@PostMapping("/isLoggedIn")
+	public boolean isLoggedIn(@RequestHeader(value="Authorization",required = false) String token){
+		if(token!=null){
+			JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
+			Claims claims = jwtaf.getClaimsFromToken(token);
+			return !claims.isEmpty();
+		}
+		return false;
+	}
 }
