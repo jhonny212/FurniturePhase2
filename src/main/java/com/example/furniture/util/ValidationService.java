@@ -7,7 +7,8 @@ import java.lang.reflect.Method;
 
 @Service
 public class ValidationService {
-    
+
+    //not null fields
     public boolean validate(Object classHref){
         Method methods[] =classHref.getClass().getDeclaredMethods();
         for (Method method : methods) {

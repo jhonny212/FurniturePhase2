@@ -18,11 +18,12 @@ public class Profile implements Serializable{
     private String firstName;
     @Column(nullable = false,name="last_name")
     private String lastName;
-
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
     @Column(nullable = false,name="user_type")
     private Integer userType;
+    @Column(nullable = true)
+    private boolean status=true;
 
     public Profile(Integer id, String username, String firstName, String lastName, String password, Integer userType) {
         this.id = id;
@@ -31,9 +32,12 @@ public class Profile implements Serializable{
         this.lastName = lastName;
         this.password = password;
         this.userType = userType;
+        this.status=true;
     }
 
-    public Profile(){}
+    public Profile(){
+        this.status=true;
+    }
 
     @Override
     public String toString() {
@@ -45,6 +49,14 @@ public class Profile implements Serializable{
                 ", password='" + password + '\'' +
                 ", userType=" + userType +
                 '}';
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Integer getId() {
