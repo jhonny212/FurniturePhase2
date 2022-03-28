@@ -30,6 +30,8 @@ public class Piece implements Serializable {
     public String msj="";
     @Transient
     public double cost=0;
+    @Transient
+    public int cod = 0;
 
     public Piece(Integer id, String name, double price, Integer stock, Category piece) {
         this.id = id;

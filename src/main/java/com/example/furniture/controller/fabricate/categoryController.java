@@ -4,6 +4,8 @@ import com.example.furniture.model.Category;
 import com.example.furniture.serviceImp.fabricate.CategoryServiceImp;
 import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,13 +22,15 @@ public class categoryController {
     private ValidationService validationService;
 
     @PostMapping("/create-category")
-    public Category createCategory(@RequestBody Category category){
+    public ResponseEntity<Category> createCategory(@RequestBody Category category){
         boolean bol = validationService.validate(category);
         if (bol) {
-            return this.categoryServiceImp.createCategory(category);
+            Category cat = this.categoryServiceImp.createCategory(category);
+            if(cat!=null){
+                return new ResponseEntity<>(cat,HttpStatus.CREATED);
+            }
         }
-        category.msj="Complete todos los campos"; 
-        return category;
+        return new ResponseEntity<>(category, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/get-all-categories")
