@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,6 +41,20 @@ public class BillServiceImp implements BillService {
     public boolean doBill(Bill bill) {
         this.billRepository.save(bill);
         return this.billRepository.existsById(bill.getId());
+    }
+
+    @Override
+    public List<BillDetails> getReturnFurniture(Date dat1, Date date2) {
+        return this.billDetailsRepository.findByCostLostGreaterThanAndDateReturnIsBetween(
+                0,
+                dat1,
+                date2
+        );
+    }
+
+    @Override
+    public List<BillDetails> getReturnFurniture() {
+        return this.billDetailsRepository.findByCostLostGreaterThan(0);
     }
 
 

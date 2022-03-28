@@ -59,7 +59,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     public Claims getClaimsFromToken(String token){
-        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(token.replace(PREFIX,"")).getBody();
+        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(token).getBody();
     }
 
     private void setUpSpringAuthentication(Claims claims) {
@@ -74,7 +74,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
         String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
+        if (authenticationHeader == null )
             return false;
         return true;
     }

@@ -30,6 +30,7 @@ public class PieceServiceImp implements PieceService {
         } catch (DataIntegrityViolationException e) {
             piece.msj ="Error al crear pieza, intente de nuevo";
         }
+        piece.cod=1;
         return piece;
     }
 

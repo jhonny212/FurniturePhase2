@@ -69,6 +69,8 @@ public class SaleFurnitureController {
 
     @GetMapping("/client/{id}")
     public Object getDetailClientByBillId(@PathVariable(name = "id")int id){
+        Date fechaactual = new Date(System.currentTimeMillis());
+        System.err.println(fechaactual);
         return saleFurnitureServiceImp.getClientByIdBill(id);
     }
 
