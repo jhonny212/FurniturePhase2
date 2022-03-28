@@ -1,8 +1,11 @@
 package com.example.furniture.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "stock_piece")
 public class StockPiece implements Serializable {
@@ -15,7 +18,7 @@ public class StockPiece implements Serializable {
     private double cost;
     @Column(nullable = false)
     private int status;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_piece",nullable = false)
     private Piece piece;
 

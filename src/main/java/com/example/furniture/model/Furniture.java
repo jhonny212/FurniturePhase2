@@ -24,10 +24,10 @@ public class Furniture implements Serializable {
     private String description;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String path;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user",nullable = false)
     private Profile profile;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_plan",nullable = false)
     private Plan plan;
     @Column(nullable = false)

@@ -1,10 +1,13 @@
 package com.example.furniture.controller.admin;
 
 import com.example.furniture.model.BillDetails;
+import com.example.furniture.repository.sales.BillRepository;
 import com.example.furniture.serviceImp.admin.BillServiceImp;
 import com.example.furniture.serviceImp.admin.ReportServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -20,9 +23,11 @@ public class BillDetailController {
     private BillServiceImp billServiceImp;
     @Autowired
     private ReportServiceImp reportServiceImp;
+    @Autowired
+    private BillRepository billRepository;
 
     @GetMapping("/report-sales-x-period")
-    public Page<BillDetails> getReportSalesXPeriod(
+    public ResponseEntity<Page<BillDetails>> getReportSalesXPeriod(
             @RequestParam Optional<String> date1,
             @RequestParam Optional<String> date2,
             @RequestParam Optional<Integer> page
@@ -42,7 +47,10 @@ public class BillDetailController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.billServiceImp.gerReportSalesXperiod(d1, d2, page);
+        Object ob = this.billRepository.findAll();
+        System.out.println();
+
+        return new ResponseEntity<>(this.billServiceImp.gerReportSalesXperiod(d1, d2, page), HttpStatus.OK);
     }
 
 }
