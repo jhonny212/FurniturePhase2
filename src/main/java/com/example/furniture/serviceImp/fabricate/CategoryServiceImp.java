@@ -17,11 +17,9 @@ public class CategoryServiceImp implements CategoryService{
     @Override
     public Category createCategory(Category category) {
         try {
-            category.msj = "Categoria creada exitosamente";
             return this.categoryRepository.save(category);
         } catch (DataIntegrityViolationException e) {
-            category.msj="La categoria ya existe";
-            return category;
+            return null;
         }
     }
 

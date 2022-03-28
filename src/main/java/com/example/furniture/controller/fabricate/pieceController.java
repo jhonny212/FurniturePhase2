@@ -4,6 +4,8 @@ import com.example.furniture.model.Piece;
 import com.example.furniture.serviceImp.fabricate.PieceServiceImp;
 import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import java.util.HashMap;
@@ -19,33 +21,38 @@ public class pieceController {
     private ValidationService validationService;
 
     @PostMapping("/register-piece")
-    public Piece createPiece(@RequestBody Piece piece){
+    public ResponseEntity<Piece> createPiece(@RequestBody Piece piece){
         if(validationService.validate(piece)){
             if (piece.cost <=0 || piece.getPrice()<=0){
                 piece.msj = "Ingrese un costo o precio mayor a 0";
-                return piece;
+                return new ResponseEntity<>(piece, HttpStatus.BAD_REQUEST);
             }
-            return pieceServiceImp.createPiece(piece);
+            Piece p= pieceServiceImp.createPiece(piece);
+            if(p.cod==0){
+                return new ResponseEntity<>(p, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(p, HttpStatus.BAD_REQUEST);
         }
         piece.msj = "Complete todos los campos";
-        return piece;
+        return new ResponseEntity<>(piece, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/update-piece")
-    public Piece updatePiece(@RequestBody Piece piece){
+    public ResponseEntity<Piece> updatePiece(@RequestBody Piece piece){
         piece.setCost(0);
         if(validationService.validate(piece)){
             if ( piece.getPrice()<=0){
                 piece.msj = "Ingrese un  precio mayor a 0";
-                return piece;
+                return new ResponseEntity<>(piece,HttpStatus.BAD_REQUEST);
             }
             Piece tmp = this.pieceServiceImp.getPieceById(piece.getId());
             if (tmp == null) {
-                return new Piece("No existe la pieza");
+                return new ResponseEntity<>(new Piece("La pieza no existe"),HttpStatus.BAD_REQUEST);
             }
-            return this.pieceServiceImp.updatePiece(tmp);
+            piece.setStock(tmp.getStock());
+            return new ResponseEntity<>(this.pieceServiceImp.updatePiece(piece),HttpStatus.CREATED);
         }
-        return new Piece("Complete los campos");
+        return new ResponseEntity<>(new Piece("Complete los campos"),HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/get-piece/{id}")

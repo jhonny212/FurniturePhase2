@@ -56,12 +56,14 @@ public class SaleFurnitureServiceImp implements SaleFurnitureService {
 
     @Override
     public List<Object[]> getAllDetailsByBillId(int id){
-        return billDetailsRepository.findAllDetailBils(1);
+        List<Object[]> t =billDetailsRepository.findAllDetailBils(id);
+        return t;
     }
 
     @Override
     public Object getClientByIdBill(int id){
-        return billDetailsRepository.findClient(id);
+        Object t =  billDetailsRepository.findClient(id);
+        return t;
     }
 
 
