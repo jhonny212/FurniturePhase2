@@ -26,7 +26,7 @@ public class BillServiceImp implements BillService {
     @Override
     public Page<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
         try {
-            return this.billDetailsRepository.findAllByBill_DateTimeBetween(
+            return this.billDetailsRepository.findAllByBill_DateTimeBetweenAndAndDateReturnIsNull(
                     date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
                     date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01")),
                     PageRequest.of(page.orElse(0), 100)

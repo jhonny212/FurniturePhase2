@@ -65,7 +65,7 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
 
 
     //PARA ADMIN
-    Page<BillDetails> findAllByBill_DateTimeBetween(Date date1, Date date2, Pageable pageable);
+    Page<BillDetails> findAllByBill_DateTimeBetweenAndAndDateReturnIsNull(Date date1, Date date2, Pageable pageable);
 
 }
 

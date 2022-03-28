@@ -30,7 +30,7 @@ public class BillDetailController {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
         Date dates1 = formatter1.parse("0001-01-01");
-        Date dates2 = formatter2.parse("2100-01-01");
+        Date dates2 = formatter2.parse("9999-01-01");
         if (!date1.isEmpty()){
             dates1 = formatter1.parse(date1.get());
         }

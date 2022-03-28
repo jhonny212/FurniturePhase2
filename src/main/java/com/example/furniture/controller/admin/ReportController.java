@@ -26,8 +26,7 @@ public class ReportController {
     @GetMapping("/report-max-furniture-x-period")
     public List<Furniture> getMaxFurnitureXPeriod(
             @RequestParam Optional<String> date1,
-            @RequestParam Optional<String> date2,
-            @RequestParam Optional<Integer> page
+            @RequestParam Optional<String> date2
     ) throws ParseException {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
@@ -50,8 +49,7 @@ public class ReportController {
     @GetMapping("/report-min-furniture-x-period")
     public List<Furniture> getMinFurnitureXPeriod(
             @RequestParam Optional<String> date1,
-            @RequestParam Optional<String> date2,
-            @RequestParam Optional<Integer> page
+            @RequestParam Optional<String> date2
     ) throws ParseException {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
