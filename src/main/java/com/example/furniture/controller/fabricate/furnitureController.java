@@ -48,7 +48,7 @@ public class furnitureController {
         Date date2=formatter2.parse(creationDate);
         Furniture furniture = new Furniture(code, name, Double.parseDouble(price), Double.parseDouble(cost), date2, description, path,
                 new Profile(Integer.parseInt(profile), null, null, null, null, null),
-                new Plan(Integer.parseInt(plan), null, null, true, null), 0);
+                new Plan(Integer.parseInt(plan), null, null, true), 0);
 
         if (this.furnitureServiceImp.isExisteFurniture(code)){
             furniture.msj = "Ya existe un Mueble con el mismo Codigo";

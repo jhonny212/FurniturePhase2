@@ -2,6 +2,7 @@ package com.example.furniture.controller.admin;
 
 import com.example.furniture.model.AssignPlanPiece;
 import com.example.furniture.model.Plan;
+import com.example.furniture.model.PlanData;
 import com.example.furniture.serviceImp.admin.AssignPlanPieceServiceImp;
 import com.example.furniture.serviceImp.admin.PlanServiceImp;
 import com.example.furniture.serviceImp.fabricate.PieceServiceImp;
@@ -28,19 +29,14 @@ public class PlanController {
     private AssignPlanPieceServiceImp assignPlanPieceServiceImp;
 
     @PostMapping("")
-    public HashMap<String, Object> doPlan(@RequestBody Plan plan){
+    public HashMap<String, Object> doPlan(@RequestBody PlanData planData){
         HashMap<String, Object> response = new HashMap<>();
         response.put("wasAdded",false);
 
-        Plan tmp = new Plan();
-        tmp.setName(plan.getName());
-        tmp.setDescription(plan.getDescription());
-        tmp.setAssignments(new ArrayList<>());
-
-        if(validationService.validate(tmp)){
-            response.replace("wasAdded",this.planServiceImp.createPlan(tmp));
-            for (AssignPlanPiece assignment: plan.getAssignments()) {
-                assignment.setPlan(tmp);
+        if(validationService.validate(planData.getPlan())){
+            response.replace("wasAdded",this.planServiceImp.createPlan(planData.getPlan()));
+            for (AssignPlanPiece assignment: planData.getAssignments()) {
+                assignment.setPlan(planData.getPlan());
                 this.assignPlanPieceServiceImp.createAssignPlanPiece(assignment);
             }
         }
