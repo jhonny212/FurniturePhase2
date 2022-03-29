@@ -26,33 +26,26 @@ public class BillServiceImp implements BillService {
 
     @Override
     public Page<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
-//        return billDetailsRepository.findAll(PageRequest.of(page.orElse(0), 100));
-
-//        try {
-//            System.out.println(billDetailsRepository.findAll());
-            System.out.println(date1.get());
-            System.out.println(date2.get());
-            System.out.println(page.get());
-            return this.billDetailsRepository.findAllByBill_DateTimeBetween(
+            return this.billDetailsRepository.findAllByBill_DateTimeBetweenAndDateReturnIsNull(
                     date1.get(),
                     date2.get(),
                     PageRequest.of(page.orElse(0), 100)
             );
-//            return  billDetailsRepository.getBillDetailsReport(
-//                    date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
-//                    date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("9999-01-01")),
-//                    PageRequest.of(page.orElse(0), 100)
-//            );
-//        } catch (ParseException e) {
-//            System.out.println(e);
-//            return null;
-//        }
     }
 
     @Override
     public boolean doBill(Bill bill) {
         this.billRepository.save(bill);
         return this.billRepository.existsById(bill.getId());
+    }
+
+    @Override
+    public Page<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
+        return this.billDetailsRepository.findAllByBill_DateTimeBetween(
+                date1.get(),
+                date2.get(),
+                PageRequest.of(page.orElse(0), 100)
+        );
     }
 
     @Override

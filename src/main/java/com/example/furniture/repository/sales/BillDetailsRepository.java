@@ -63,14 +63,8 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
 
 
     //PARA ADMIN
+    Page<BillDetails> findAllByBill_DateTimeBetweenAndDateReturnIsNull(Date date1, Date date2, Pageable pageable);
     Page<BillDetails> findAllByBill_DateTimeBetween(Date date1, Date date2, Pageable pageable);
-
-//    Page<BillDetails> findAll(Pageable pageable);
-
-//    @Query(value = "SELECT * FROM \"bill_details\" AS billd " +
-//            "LEFT JOIN \"bill\" AS bill ON billd.id_bill=bill.id_bill " +
-//            "WHERE bill.datetime BETWEEN '0001-01-01' AND '9999-01-01' LIMIT ?;", nativeQuery = true)
-//    Page<BillDetails> getBillDetailsReport(Date date1, Date date2, Pageable pageable);
 
     @Query(value = "select f.\"name\",bd.cost_lost,\n" +
             "bd.date_return,bd.price_sale,b.nit,pf.username\n" +

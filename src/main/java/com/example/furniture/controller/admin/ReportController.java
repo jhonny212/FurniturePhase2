@@ -90,6 +90,6 @@ public class ReportController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.billServiceImp.gerReportSalesXperiod(d1, d2, page);
+        return this.billServiceImp.getReportEarningsXPeriod(d1, d2, page);
     }
 }
