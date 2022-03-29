@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Table(name = "furniture_in_bill")
 public class FurnitureInBill implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -47,4 +47,13 @@ public class FurnitureInBill implements Serializable {
     public Integer getId() { return id; }
 
     public void setId(Integer id){ this.id = id; }
+
+    @Override
+    public String toString() {
+        return "FurnitureInBill{" +
+                "id=" + id +
+                ", furniture=" + furniture +
+                ", profile=" + profile +
+                '}';
+    }
 }

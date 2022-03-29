@@ -2,9 +2,11 @@ package com.example.furniture.controller.sales;
 
 import com.example.furniture.config.JWTAuthorizationFilter;
 import com.example.furniture.model.*;
+import com.example.furniture.repository.fabricate.FurnitureRepository;
 import com.example.furniture.repository.sales.BillDetailsRepository;
 import com.example.furniture.repository.sales.BillRepository;
 import com.example.furniture.repository.sales.ClientRepository;
+import com.example.furniture.repository.sales.FurnitureInBillRepository;
 import com.example.furniture.repository.user.UserRepository;
 import com.example.furniture.serviceImp.admin.BillServiceImp;
 import com.example.furniture.serviceImp.sales.ClientServiceImp;
@@ -35,6 +37,10 @@ public class BillController {
     private BillDetailsRepository billDetailsRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FurnitureRepository furnitureRepository;
+    @Autowired
+    private FurnitureInBillRepository furnitureInBillRepository;
 
     @PostMapping("")
     public HashMap<String, Object> doBill(@RequestHeader("Authorization") String token, @RequestBody Bill bill){
@@ -47,7 +53,8 @@ public class BillController {
 
         Bill tmp = new Bill();
         tmp.setDateTime(utilities.getActualDate());
-        tmp.setProfile(this.userRepository.findByUsername((String)claims.get("username")));
+        Profile profile = this.userRepository.findByUsername((String)claims.get("username"));
+        tmp.setProfile(profile);
         tmp.setDetails(new ArrayList<>());
         if(!this.clientRepository.existsById(bill.getClient().getId())){
             this.clientRepository.save(bill.getClient());
@@ -60,7 +67,11 @@ public class BillController {
             for (BillDetails detail: bill.getDetails()) {
                 detail.setBill(tmp);
                 this.billDetailsRepository.save(detail);
+                Furniture furniture = this.furnitureRepository.getById(detail.getFurniture().getCode());
+                furniture.setStatus(2);
+                this.furnitureRepository.save(furniture);
             }
+            this.furnitureInBillRepository.deleteFurnitureInBillByProfile(profile);
         }
         return response;
     }

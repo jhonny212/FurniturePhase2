@@ -100,4 +100,18 @@ public class Profile implements Serializable{
     public String getToken() { return token; }
 
     public void setToken(String token) { this.token = token; }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", userType=" + userType +
+                ", status=" + status +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

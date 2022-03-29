@@ -129,10 +129,11 @@ public class FurnitureServiceImp implements FurnitureService {
 
     @Override
     public Page<Furniture> getFurnituresOnSale(Optional<String> name, Optional<Integer> page) {
-        return this.furnitureRepository.findByStatusAndNameContains(
+        System.out.println(name);
+        return this.furnitureRepository.findByStatusAndNameContainsIgnoreCase(
                 1,
                 name.orElse(""),
-                PageRequest.of(page.orElse(0), 10)
+                PageRequest.of(page.orElse(0), 5)
         );
     }
 }

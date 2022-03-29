@@ -24,7 +24,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
     private final String SECRET = "mySecretKey";
 
     @Override
@@ -59,7 +58,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     public Claims getClaimsFromToken(String token){
-        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(token.replace(PREFIX,"")).getBody();
+        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(token).getBody();
     }
 
     private void setUpSpringAuthentication(Claims claims) {
@@ -74,7 +73,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
         String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
+        if (authenticationHeader == null)
             return false;
         return true;
     }
