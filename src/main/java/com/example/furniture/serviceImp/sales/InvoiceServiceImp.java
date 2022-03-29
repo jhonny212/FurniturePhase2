@@ -29,7 +29,11 @@ public class InvoiceServiceImp implements InvoiceService {
 
     @Override
     public Page<BillDetails> getBillsClient(Optional<Integer> billId, Optional<Integer> page){
-        return this.billDetailsRepository.findAllByBill_Id(billId.orElse(0), PageRequest.of(page.orElse(0),10));
+        Bill bill = new Bill();
+        bill.setId(billId.orElse(0));
+        Page<BillDetails> l = this.billDetailsRepository.findAllByBill(bill, PageRequest.of(page.orElse(0),10));
+        System.out.println(l.getContent());
+        return l;
     }
 
     public boolean isExisteBill(Integer billId){

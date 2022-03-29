@@ -13,11 +13,11 @@ public class FurnitureInBill implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "code",nullable = false)
     private Furniture furniture;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user",nullable = false)
     private Profile profile;
 

@@ -9,10 +9,10 @@ public class AssignFurniturePiece implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_stock_piece",nullable = false)
     private StockPiece stockPiece;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "code_furniture",nullable = false)
     private Furniture furniture;
 

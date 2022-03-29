@@ -18,16 +18,16 @@ public class Bill implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private java.util.Date dateTime;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user",nullable = false)
     private Profile profile;
     @Column(nullable = false)
     private double total;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nit", nullable = false)
     private Client client;
-    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BillDetails> details;
+//    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<BillDetails> details;
 
     public Bill(){}
 
@@ -37,7 +37,7 @@ public class Bill implements Serializable {
         this.profile = profile;
         this.total = total;
         this.client = client;
-        this.details = details;
+//        this.details = details;
     }
 
     @Override
@@ -91,11 +91,11 @@ public class Bill implements Serializable {
         this.client = client;
     }
 
-    public List<BillDetails> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<BillDetails> details) {
-        this.details = details;
-    }
+//    public List<BillDetails> getDetails() {
+//        return details;
+//    }
+//
+//    public void setDetails(List<BillDetails> details) {
+//        this.details = details;
+//    }
 }

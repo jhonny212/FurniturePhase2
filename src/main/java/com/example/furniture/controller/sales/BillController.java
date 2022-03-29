@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
-
 @RestController
 @RequestMapping("/sales/bill")
 public class BillController {
@@ -55,7 +53,7 @@ public class BillController {
         tmp.setDateTime(utilities.getActualDate());
         Profile profile = this.userRepository.findByUsername((String)claims.get("username"));
         tmp.setProfile(profile);
-        tmp.setDetails(new ArrayList<>());
+        //tmp.setDetails(new ArrayList<>());
         if(!this.clientRepository.existsById(bill.getClient().getId())){
             this.clientRepository.save(bill.getClient());
         }

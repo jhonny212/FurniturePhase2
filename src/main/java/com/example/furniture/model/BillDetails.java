@@ -1,19 +1,23 @@
 package com.example.furniture.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+//@JsonIgnoreProperties({ "", "lastModifiedBy" })
 @Entity
 @Table(name = "bill_details")
 public class BillDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_bill")
     private Bill bill;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_furniture",nullable = false)
     private Furniture furniture;
     @Temporal(TemporalType.DATE)
