@@ -101,6 +101,8 @@ public class Profile implements Serializable{
 
     public void setToken(String token) { this.token = token; }
 
+    public boolean getStatus(){return this.status;}
+
     @Override
     public String toString() {
         return "Profile{" +
