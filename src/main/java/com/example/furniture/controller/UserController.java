@@ -22,7 +22,7 @@ public class UserController {
 		Profile profile = this.userRepository.findByUsername(username);
 		if(profile != null){
 			System.out.println(profile.toString());
-			if(profile.getPassword().equals(pwd)){
+			if(profile.getPassword().equals(pwd) && profile.status){
 				response.put("token",jwtaf.getJWTToken(profile.getUsername(),profile.getUserType(),profile.getId()));
 			}else{
 				response.put("msj","La contraseña ingresada no es la correcta");
