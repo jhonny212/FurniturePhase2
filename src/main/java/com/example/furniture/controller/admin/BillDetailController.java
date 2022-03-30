@@ -34,11 +34,11 @@ public class BillDetailController {
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
         Date dates1 = formatter1.parse("0001-01-01");
         Date dates2 = formatter2.parse("9999-01-01");
-        if (!date1.isEmpty()){
+        if (!date1.isPresent()){
             dates1 = formatter1.parse(date1.get());
         }
 
-        if (!date2.isEmpty()){
+        if (!date2.isPresent()){
             dates2 = formatter2.parse(date2.get());
         }
 
