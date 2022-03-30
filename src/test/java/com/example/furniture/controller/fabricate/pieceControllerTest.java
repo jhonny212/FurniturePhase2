@@ -3,6 +3,7 @@ package com.example.furniture.controller.fabricate;
 import com.example.furniture.config.JWTAuthorizationFilter;
 import com.example.furniture.model.Piece;
 import com.example.furniture.model.Profile;
+import com.example.furniture.repository.admin.AssignPlanPieceRepository;
 import com.example.furniture.serviceImp.fabricate.PieceServiceImp;
 import com.example.furniture.util.ValidationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,7 +47,8 @@ class pieceControllerTest {
     private PieceServiceImp pieceServiceImp;
     @MockBean
     private ValidationService validationService;
-
+    @MockBean
+    private AssignPlanPieceRepository assignPlanPieceRepository;
     Piece piece;
     @BeforeEach
     void setUp() {
