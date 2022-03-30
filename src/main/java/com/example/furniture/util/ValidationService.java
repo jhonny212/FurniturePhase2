@@ -12,7 +12,10 @@ public class ValidationService {
     public boolean validate(Object classHref){
         Method methods[] =classHref.getClass().getDeclaredMethods();
         for (Method method : methods) {
-            if (method.getName().contains("get") && !method.getName().toUpperCase().contains("ID") && !method.getName().toUpperCase().contains("TOKEN")){
+            if (method.getName().contains("get") &&
+                    !method.getName().toUpperCase().contains("ID")
+                    && !method.getName().toUpperCase().contains("TOKEN")
+            ){
                 try {
                     Object obj = method.invoke(classHref, null);
                     if (obj == null) {
