@@ -21,7 +21,6 @@ public class UserController {
 		JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
 		Profile profile = this.userRepository.findByUsername(username);
 		if(profile != null){
-			System.err.println(profile.status);
 			if(profile.getPassword().equals(pwd)){
 				response.put("token",jwtaf.getJWTToken(profile.getUsername(),profile.getUserType(),profile.getId()));
 			}else{
