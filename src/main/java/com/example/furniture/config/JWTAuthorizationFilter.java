@@ -33,6 +33,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         if (clientOrigin==null){
             clientOrigin = "*";
         }
+        System.err.println(clientOrigin);
         response.setHeader("Access-Control-Allow-Origin", clientOrigin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
