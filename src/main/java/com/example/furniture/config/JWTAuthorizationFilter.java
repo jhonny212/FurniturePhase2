@@ -25,12 +25,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
     private final String SECRET = "mySecretKey";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        String clientOrigin = request.getHeader("origin");
+        if (clientOrigin==null){
+            clientOrigin = "*";
+        }
+        System.err.println(clientOrigin);
+        response.setHeader("Access-Control-Allow-Origin", clientOrigin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -75,7 +79,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
         String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null )
+        if (authenticationHeader == null)
             return false;
         return true;
     }

@@ -29,4 +29,17 @@ public class StockPieceServiceImp implements StockPieceService {
         this.stockPieceRepository.saveAll(pieces);
         return true;
     }
+
+    public boolean addInStock(Piece piece,int stock,double cost) {
+        List<StockPiece> pieces = new ArrayList<>();
+        for (int i = 0; i < stock; i++) {
+            StockPiece t = new StockPiece();
+            t.setStatus(0);
+            t.setCost(cost);
+            t.setPiece(piece);
+            pieces.add(t);
+        }
+        this.stockPieceRepository.saveAll(pieces);
+        return true;
+    }
 }

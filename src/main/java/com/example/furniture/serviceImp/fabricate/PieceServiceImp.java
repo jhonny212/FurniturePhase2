@@ -34,6 +34,10 @@ public class PieceServiceImp implements PieceService {
         return piece;
     }
 
+    public void addInStock(Piece piece,int stock,double cost){
+        this.stockPieceServiceImp.addInStock(piece,stock,cost);
+    }
+
     @Override
     public Piece getPieceById(Integer id) {
         Optional<Piece> piece =  this.pieceRepository.findById(id);
@@ -53,7 +57,7 @@ public class PieceServiceImp implements PieceService {
 
     @Override
     public Page<Piece> getAllPieces(Optional<Integer> pageNumber, Optional<String> name){
-        return this.pieceRepository.findByNameContains(
+        return this.pieceRepository.findByNameContainsIgnoreCase(
                 name.orElse(""),
                 PageRequest.of(
                         pageNumber.orElse(0),5

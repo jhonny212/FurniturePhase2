@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface PieceRepository extends JpaRepository<Piece,Integer> {
 
-    public Page<Piece> findByNameContains(String name, Pageable page);
+    public Page<Piece> findByNameContainsIgnoreCase(String name, Pageable page);
 
 }

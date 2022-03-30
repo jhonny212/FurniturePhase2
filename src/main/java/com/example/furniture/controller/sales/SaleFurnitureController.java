@@ -52,7 +52,7 @@ public class SaleFurnitureController {
                     }
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+
             }
 
 

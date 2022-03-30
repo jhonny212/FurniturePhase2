@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public interface FurnitureRepository extends JpaRepository<Furniture,Integer> {
     Page<Furniture> findByNameContains(String name, Pageable page);
     Page<Furniture> findByCreationDateBetween(Date date1, Date date2, Pageable page);
     Page<Furniture> findByStatus(Integer status, Pageable page);
-    Page<Furniture> findByStatusAndNameContains(Integer status, String name, Pageable page);
+    Page<Furniture> findByStatusAndNameContainsIgnoreCase(Integer status, String name, Pageable page);
 
     //REPORTS
     @Query(value = "SELECT f.*, (COUNT(billd.id_furniture)) AS amount FROM \n" +
@@ -47,6 +48,10 @@ public interface FurnitureRepository extends JpaRepository<Furniture,Integer> {
             "WHERE f.code=billd.id_furniture AND bill.datetime between ? and ? \n" +
             "GROUP BY billd.id_furniture, f.code ORDER BY amount asc LIMIT 10;", nativeQuery = true)
     List<Double> findMinFurnitureNum(Date date1, Date date2);
+
+    @Modifying
+    @Query(value = "update furniture fur set fur.status = ?1 where fur.code = ?2", nativeQuery = true)
+    int setStatusById(Integer status, Integer id);
 
 //    @Query(value = "", nativeQuery = true)
 //    Object findEarnings(Date date1, Date date2);
