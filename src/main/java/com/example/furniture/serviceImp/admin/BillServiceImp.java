@@ -50,6 +50,26 @@ public class BillServiceImp implements BillService {
     }
 
     @Override
+    public Object gerReportBestSellerXPeriod(Optional<Date> d1, Optional<Date> d2) throws ParseException {
+        Object obj = this.billDetailsRepository.getBestSeller(
+                d1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
+                d2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01"))
+        );
+
+        return obj;
+    }
+
+    @Override
+    public Object getReportBestEarnerXPeriod(Optional<Date> d1, Optional<Date> d2) throws ParseException {
+        Object obj = this.billDetailsRepository.getBestEarner(
+                d1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
+                d2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01"))
+        );
+
+        return obj;
+    }
+
+    @Override
     public boolean doBill(Bill bill) {
         this.billRepository.save(bill);
         return this.billRepository.existsById(bill.getId());
