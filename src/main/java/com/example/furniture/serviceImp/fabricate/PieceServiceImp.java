@@ -53,7 +53,7 @@ public class PieceServiceImp implements PieceService {
 
     @Override
     public Page<Piece> getAllPieces(Optional<Integer> pageNumber, Optional<String> name){
-        return this.pieceRepository.findByNameContains(
+        return this.pieceRepository.findByNameContainsIgnoreCase(
                 name.orElse(""),
                 PageRequest.of(
                         pageNumber.orElse(0),5

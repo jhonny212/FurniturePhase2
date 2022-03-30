@@ -31,7 +31,7 @@ public class Bill implements Serializable {
 
     public Bill(){}
 
-    public Bill(Integer id, Date date_time, Profile profile, double total,Client client, List<BillDetails> details) {
+    public Bill(Integer id, Date date_time, Profile profile, double total,Client client) {
         this.id = id;
         this.dateTime = date_time;
         this.profile = profile;

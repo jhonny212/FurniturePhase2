@@ -25,7 +25,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
     private final String SECRET = "mySecretKey";
 
     @Override
@@ -79,7 +78,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
         String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null )
+        if (authenticationHeader == null)
             return false;
         return true;
     }

@@ -65,7 +65,7 @@ class furnitureControllerTest {
         token = jwtaf.getJWTToken(profile.getUsername(),profile.getUserType(),profile.getId());
         this.furniture = new Furniture(1, "name",1, 1, new Date(), "description", "path",
                 new Profile(1, null, null, null, null, null),
-                new Plan(1, null, null, true, null), 0);
+                new Plan(1, null, null, true), 0);
     }
 
     @AfterEach

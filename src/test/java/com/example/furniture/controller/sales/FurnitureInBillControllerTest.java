@@ -1,8 +1,10 @@
 package com.example.furniture.controller.sales;
 
 import com.example.furniture.config.JWTAuthorizationFilter;
+import com.example.furniture.model.Furniture;
 import com.example.furniture.model.FurnitureInBill;
 import com.example.furniture.model.Profile;
+import com.example.furniture.repository.user.UserRepository;
 import com.example.furniture.serviceImp.fabricate.FurnitureInBillServiceImp;
 import com.example.furniture.util.ValidationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,6 +48,8 @@ class FurnitureInBillControllerTest {
     private FurnitureInBillServiceImp furnitureInBillService;
     @MockBean
     private ValidationService validationService;
+    @MockBean
+    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
@@ -66,7 +70,7 @@ class FurnitureInBillControllerTest {
         HashMap<String, Object> responses = new HashMap<>();
         responses.put("furnituresInBill",list);
         String output = this.mapToJson(responses);
-        Mockito.when(furnitureInBillService.getFurnituresInBillBySession(Mockito.anyInt())).thenReturn(list);
+        Mockito.when(furnitureInBillService.getFurnituresInBillBySession(Mockito.any(Profile.class))).thenReturn(list);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(URL+"/on-session")
                 .header("Authorization",token)
                 .accept(MediaType.APPLICATION_JSON)
@@ -83,7 +87,7 @@ class FurnitureInBillControllerTest {
         HashMap<String, Object> responses = new HashMap<>();
         responses.put("wasDeleted",true);
         String output = this.mapToJson(responses);
-        Mockito.when(furnitureInBillService.removeFurnitureFromBill(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(furnitureInBillService.removeFurnitureFromBill(Mockito.any(Profile.class),Mockito.any(Furniture.class))).thenReturn(true);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL+"/on-session/1")
                 .header("Authorization",token)
                 .accept(MediaType.APPLICATION_JSON)
@@ -100,12 +104,15 @@ class FurnitureInBillControllerTest {
         HashMap<String, Object> responses = new HashMap<>();
         responses.put("wasAdded",true);
         String output = this.mapToJson(responses);
+        Furniture furniture = new Furniture();
+        furniture.setCode(1);
+        String input = this.mapToJson(furniture);
         Mockito.when(validationService.validate(Mockito.any(FurnitureInBill.class))).thenReturn(true);
         Mockito.when(furnitureInBillService.addFurnitureToBill(Mockito.any(FurnitureInBill.class))).thenReturn(true);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(URL+"/on-session")
                 .header("Authorization",token)
                 .accept(MediaType.APPLICATION_JSON)
-                .queryParam("code","1")
+                .content(input)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();

@@ -22,17 +22,14 @@ public class Plan implements Serializable {
     private String description;
     @Column(nullable = false)
     private boolean status;
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AssignPlanPiece> assignments;
 
     public Plan(){}
 
-    public Plan(Integer id, String name, String description, boolean status, List<AssignPlanPiece> assignments) {
+    public Plan(Integer id, String name, String description, boolean status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
-        this.assignments = assignments;
     }
 
     public Integer getId() {
@@ -65,14 +62,6 @@ public class Plan implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public List<AssignPlanPiece> getAssignments() {
-        return assignments;
-    }
-
-    public void setAssignments(List<AssignPlanPiece> assignments) {
-        this.assignments = assignments;
     }
 
     @Override
