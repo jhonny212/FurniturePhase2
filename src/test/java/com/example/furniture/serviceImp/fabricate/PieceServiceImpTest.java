@@ -62,7 +62,7 @@ class PieceServiceImpTest {
     void getAllPieces() {
         Page<Piece> pieces = Page.empty();
         Mockito.when(
-                pieceRepository.findByNameContains(Mockito.anyString(),Mockito.any(Pageable.class))
+                pieceRepository.findByNameContainsIgnoreCase(Mockito.anyString(),Mockito.any(Pageable.class))
         ).thenReturn(pieces);
         Optional<Integer> op = Optional.of(1);
         Optional<String> name = Optional.of("s");

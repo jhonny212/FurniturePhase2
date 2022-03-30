@@ -123,7 +123,7 @@ class FurnitureServiceImpTest {
     void getFurnituresOnSale() {
         Page<Furniture> p=Page.empty(Pageable.unpaged());
         Mockito.when(
-                furnitureRepository.findByStatusAndNameContains(
+                furnitureRepository.findByStatusAndNameContainsIgnoreCase(
                         Mockito.anyInt(),
                         Mockito.anyString(),
                         Mockito.any(Pageable.class)
