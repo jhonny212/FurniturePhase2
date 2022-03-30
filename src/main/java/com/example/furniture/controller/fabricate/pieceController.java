@@ -44,6 +44,7 @@ public class pieceController {
         if(stock > 0 && cost >0){
                         Piece tmp = this.pieceServiceImp.getPieceById(id);
                         if(tmp!=null){
+                            tmp.setStock(tmp.getStock()+stock);
                             this.pieceServiceImp.addInStock(tmp,stock,cost);
                             return new ResponseEntity<>(true,HttpStatus.OK);
                         }
