@@ -21,7 +21,8 @@ public class UserController {
 		JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
 		Profile profile = this.userRepository.findByUsername(username);
 		if(profile != null){
-			if(profile.getPassword().equals(pwd) && profile.status){
+			System.out.println(profile.toString());
+			if(profile.getPassword().equals(pwd)){
 				response.put("token",jwtaf.getJWTToken(profile.getUsername(),profile.getUserType(),profile.getId()));
 			}else{
 				response.put("msj","La contraseña ingresada no es la correcta");
