@@ -34,6 +34,10 @@ public class PieceServiceImp implements PieceService {
         return piece;
     }
 
+    public void addInStock(Piece piece){
+        this.stockPieceServiceImp.addInStock(piece);
+    }
+
     @Override
     public Piece getPieceById(Integer id) {
         Optional<Piece> piece =  this.pieceRepository.findById(id);

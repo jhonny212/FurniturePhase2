@@ -11,6 +11,7 @@ import com.example.furniture.util.Utility;
 import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,6 +80,8 @@ public class furnitureController {
 
         return new Furniture();
     }
+
+
 
     @GetMapping("/get-allFurniture")
     public Page<Furniture> getAllFuniture(
