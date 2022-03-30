@@ -1,8 +1,10 @@
 package com.example.furniture.controller.fabricate;
 
 import com.example.furniture.model.Furniture;
+import com.example.furniture.model.OnSaleData;
 import com.example.furniture.model.Plan;
 import com.example.furniture.model.Profile;
+import com.example.furniture.repository.fabricate.FurnitureRepository;
 import com.example.furniture.service.fabricate.FurnitureService;
 import com.example.furniture.serviceImp.fabricate.FurnitureServiceImp;
 import com.example.furniture.util.Utility;
@@ -27,6 +29,8 @@ public class furnitureController {
     private FurnitureServiceImp furnitureServiceImp;
     @Autowired
     private ValidationService validationService;
+    @Autowired
+    private FurnitureRepository furnitureRepository;
     @Autowired
     private Utility utilityService;
 
@@ -112,16 +116,27 @@ public class furnitureController {
         return this.furnitureServiceImp.getAllFurnitureFilter(d1,d2,sort, page);
     }
 
-    @PutMapping("/put-furniture-on-sale/{id}")
-    public Object putFurnitureOnSale(@PathVariable(name = "id") int id){
-        HashMap<String,String> response= new HashMap<>();
-        String msj = this.furnitureServiceImp.updateFurniture(id);
-        response.put("msj",msj);
+    @PutMapping("/put-furniture-on-sale/")
+    public Object putFurnitureOnSale(@RequestBody OnSaleData onSaleData){
+        HashMap<String,Object> response= new HashMap<>();
+        Furniture furniture = this.furnitureRepository.findById(onSaleData.getCode()).orElse(null);
+        response.put("wasUpdated",false);
+        if(furniture!=null){
+            furniture.setPrice(onSaleData.getPrice());
+            furniture.setStatus(1);
+            this.furnitureRepository.save(furniture);
+            response.replace("wasUpdated", true);
+        }
         return response;
     }
 
     @GetMapping("/on-sale")
     public Page<Furniture> getFurnituresOnSale(@RequestParam Optional<Integer> page, @RequestParam Optional<String> name){
         return this.furnitureServiceImp.getFurnituresOnSale(name, page);
+    }
+
+    @GetMapping("/on-storage")
+    public Page<Furniture> getFurnituresOnStorage(@RequestParam Optional<Integer> page, @RequestParam Optional<String> name){
+        return this.furnitureServiceImp.getFurnituresOnStorage(name, page);
     }
 }

@@ -136,4 +136,13 @@ public class FurnitureServiceImp implements FurnitureService {
                 PageRequest.of(page.orElse(0), 5)
         );
     }
+
+    @Override
+    public Page<Furniture> getFurnituresOnStorage(Optional<String> name, Optional<Integer> page){
+        return this.furnitureRepository.findByStatusAndNameContainsIgnoreCase(
+                0,
+                name.orElse(""),
+                PageRequest.of(page.orElse(0),10)
+        );
+    }
 }

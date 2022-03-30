@@ -22,4 +22,5 @@ public interface FurnitureService {
     public boolean addFurnitureToBill();
     public Optional<Furniture> getFurnitureById(Integer id);
     Page<Furniture> getFurnituresOnSale(Optional<String> name, Optional<Integer> page);
+    Page<Furniture> getFurnituresOnStorage(Optional<String> name, Optional<Integer> page);
 }
