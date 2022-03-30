@@ -1,6 +1,8 @@
 package com.example.furniture.controller.fabricate;
 
+import com.example.furniture.model.AssignPlanPiece;
 import com.example.furniture.model.Piece;
+import com.example.furniture.repository.admin.AssignPlanPieceRepository;
 import com.example.furniture.serviceImp.fabricate.PieceServiceImp;
 import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -94,6 +97,13 @@ public class pieceController {
             response.put("msj","Ha ocurrido un error por lo que la pieza no se ha eliminado.");
         }
         return response;
+    }
+    @Autowired
+    AssignPlanPieceRepository assignPlanPieceRepository;
+
+    @GetMapping("/get-pla-id/{id}")
+    public List<AssignPlanPiece> getPlan(@PathVariable("id") int id){
+        return assignPlanPieceRepository.findAllByPlan_Id(id);
     }
 
 }
