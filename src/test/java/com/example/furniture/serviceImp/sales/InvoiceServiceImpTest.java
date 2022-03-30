@@ -39,7 +39,7 @@ class InvoiceServiceImpTest {
         Optional<Integer> billId = Optional.of(1);
         Optional<Integer> page = Optional.of(1);
         Mockito.when(
-                billDetailsRepository.findAllByBill_Id(Mockito.any(Integer.class),Mockito.any(Pageable.class)
+                billDetailsRepository.findAllByBill(Mockito.any(Bill.class),Mockito.any(Pageable.class)
                 )
         ).thenReturn(pageBills);
         assertEquals(invoiceServiceImp.getBillsClient(billId,page),pageBills);
