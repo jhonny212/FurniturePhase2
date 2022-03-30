@@ -34,8 +34,8 @@ public class PieceServiceImp implements PieceService {
         return piece;
     }
 
-    public void addInStock(Piece piece){
-        this.stockPieceServiceImp.addInStock(piece);
+    public void addInStock(Piece piece,int stock,double cost){
+        this.stockPieceServiceImp.addInStock(piece,stock,cost);
     }
 
     @Override
