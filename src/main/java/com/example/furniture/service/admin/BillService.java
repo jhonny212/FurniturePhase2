@@ -14,4 +14,5 @@ public interface BillService {
     public boolean doBill(Bill bill);
     public List<BillDetails> getReturnFurniture(Date dat1,Date date2);
     public List<BillDetails> getReturnFurniture();
+    public Page<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page);
 }

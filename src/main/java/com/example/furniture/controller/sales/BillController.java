@@ -48,7 +48,7 @@ public class BillController {
         Bill tmp = new Bill();
         tmp.setDateTime(utilities.getActualDate());
         tmp.setProfile(this.userRepository.findByUsername((String)claims.get("username")));
-        tmp.setDetails(new ArrayList<>());
+//        tmp.setDetails(new ArrayList<>());
         if(!this.clientRepository.existsById(bill.getClient().getId())){
             this.clientRepository.save(bill.getClient());
         }
@@ -57,10 +57,10 @@ public class BillController {
 
         if(validationService.validate(tmp)){
             response.replace("wasAdded",this.billServiceImp.doBill(tmp));
-            for (BillDetails detail: bill.getDetails()) {
-                detail.setBill(tmp);
-                this.billDetailsRepository.save(detail);
-            }
+//            for (BillDetails detail: bill.getDetails()) {
+//                detail.setBill(tmp);
+//                this.billDetailsRepository.save(detail);
+//            }
         }
         return response;
     }

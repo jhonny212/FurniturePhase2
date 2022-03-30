@@ -3,6 +3,8 @@ package com.example.furniture.controller.sales;
 
 import com.example.furniture.model.Bill;
 import com.example.furniture.model.BillDetails;
+import com.example.furniture.repository.fabricate.CategoryRepository;
+import com.example.furniture.repository.sales.BillDetailsRepository;
 import com.example.furniture.serviceImp.sales.InvoiceServiceImp;
 import com.example.furniture.serviceImp.sales.SaleFurnitureServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,19 @@ public class InvoiceController {
     @Autowired
     private SaleFurnitureServiceImp saleFurnitureServiceImp;
 
+    @Autowired
+    private BillDetailsRepository billDetailsRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @GetMapping("/get-bill-cliente")
-    public Page<BillDetails> getBillClient(
+    public Object getBillClient(
             @RequestParam Optional<Integer> billId,
             @RequestParam Optional<Integer> page
     ){
-        return this.invoiceServiceImp.getBillsClient(billId, page);
+        Page<BillDetails> li = this.invoiceServiceImp.getBillsClient(billId, page);
+        return li;
     }
 
     @GetMapping("/get-return-client")

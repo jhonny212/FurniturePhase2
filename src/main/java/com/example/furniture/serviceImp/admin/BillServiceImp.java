@@ -26,21 +26,26 @@ public class BillServiceImp implements BillService {
 
     @Override
     public Page<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
-        try {
-            return this.billDetailsRepository.findAllByBill_DateTimeBetween(
-                    date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
-                    date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01")),
+            return this.billDetailsRepository.findAllByBill_DateTimeBetweenAndDateReturnIsNull(
+                    date1.get(),
+                    date2.get(),
                     PageRequest.of(page.orElse(0), 100)
             );
-        } catch (ParseException e) {
-            return null;
-        }
     }
 
     @Override
     public boolean doBill(Bill bill) {
         this.billRepository.save(bill);
         return this.billRepository.existsById(bill.getId());
+    }
+
+    @Override
+    public Page<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
+        return this.billDetailsRepository.findAllByBill_DateTimeBetween(
+                date1.get(),
+                date2.get(),
+                PageRequest.of(page.orElse(0), 100)
+        );
     }
 
     @Override

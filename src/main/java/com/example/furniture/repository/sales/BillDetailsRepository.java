@@ -1,5 +1,6 @@
 package com.example.furniture.repository.sales;
 
+import com.example.furniture.model.Bill;
 import com.example.furniture.model.BillDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -49,7 +50,7 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
             "\tbill.datetime BETWEEN ? AND ?;",nativeQuery = true)
     Object findEarnings(Date date1, Date date2);
 
-    Page<BillDetails> findAllByBill_Id(Integer id_bill,Pageable pageable);
+    Page<BillDetails> findAllByBill(Bill id_bill, Pageable pageable);
     Page<BillDetails> findAllByBill_Client_Id(Integer nit, Pageable pageable);
     Page<BillDetails> findAllByBill_Client_IdAndDateReturnNull(Integer nit, Pageable pageable);
     Page<BillDetails> findAllByBill_Client_IdAndDateReturnNotNull(Integer nit, Pageable pageable);
@@ -62,6 +63,7 @@ public interface BillDetailsRepository extends JpaRepository<BillDetails,Integer
 
 
     //PARA ADMIN
+    Page<BillDetails> findAllByBill_DateTimeBetweenAndDateReturnIsNull(Date date1, Date date2, Pageable pageable);
     Page<BillDetails> findAllByBill_DateTimeBetween(Date date1, Date date2, Pageable pageable);
 
     @Query(value = "select f.\"name\",bd.cost_lost,\n" +
