@@ -3,7 +3,6 @@ package com.example.furniture.controller.admin;
 import com.example.furniture.model.BillDetails;
 import com.example.furniture.model.Furniture;
 import com.example.furniture.serviceImp.admin.BillServiceImp;
-import com.example.furniture.serviceImp.admin.CsvExportService;
 import com.example.furniture.serviceImp.admin.ReportServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +24,6 @@ public class ReportController {
     private BillServiceImp billServiceImp;
     @Autowired
     private ReportServiceImp reportServiceImp;
-    @Autowired
-    private CsvExportService csvExportService;
 
     @GetMapping("/report-max-furniture-x-period")
     public List<Furniture> getMaxFurnitureXPeriod(
@@ -95,7 +92,7 @@ public class ReportController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.billServiceImp.gerReportSalesXperiod(d1, d2, page);
+        return this.billServiceImp.getReportEarningsXPeriod(d1, d2, page);
     }
 
     @GetMapping("/report-best-seller-x-period")
@@ -142,12 +139,5 @@ public class ReportController {
         Optional<Date> d2 = Optional.of(dates2);
 
         return this.billServiceImp.getReportBestEarnerXPeriod(d1, d2);
-    }
-
-    @RequestMapping(path = "/export/report-1")
-    public void exportReport1(HttpServletResponse servletResponse) throws IOException {
-        servletResponse.setContentType("text/csv");
-        servletResponse.addHeader("Content-Disposition", "attachment; filename=\"file.csv\"");
-        csvExportService.writeEmployeesToCsv(servletResponse.getWriter());
     }
 }

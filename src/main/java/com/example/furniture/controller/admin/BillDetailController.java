@@ -23,8 +23,6 @@ public class BillDetailController {
     private BillServiceImp billServiceImp;
     @Autowired
     private ReportServiceImp reportServiceImp;
-    @Autowired
-    private BillRepository billRepository;
 
     @GetMapping("/report-sales-x-period")
     public ResponseEntity<Page<BillDetails>> getReportSalesXPeriod(
@@ -46,9 +44,6 @@ public class BillDetailController {
 
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
-
-        Object ob = this.billRepository.findAll();
-        System.out.println();
 
         return new ResponseEntity<>(this.billServiceImp.gerReportSalesXperiod(d1, d2, page), HttpStatus.OK);
     }

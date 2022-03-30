@@ -20,8 +20,12 @@ public class categoryController {
     private CategoryServiceImp categoryServiceImp;
     @Autowired
     private ValidationService validationService;
-
+    @GetMapping("")
+    public String getTest(){
+        return "Hola";
+    }
     @PostMapping("/create-category")
+    @ResponseBody
     public ResponseEntity<Category> createCategory(@RequestBody Category category){
         boolean bol = validationService.validate(category);
         if (bol) {
@@ -30,6 +34,7 @@ public class categoryController {
                 return new ResponseEntity<>(cat,HttpStatus.CREATED);
             }
         }
+        System.err.println(bol+" "+category.toString());
         return new ResponseEntity<>(category, HttpStatus.BAD_REQUEST);
     }
 
