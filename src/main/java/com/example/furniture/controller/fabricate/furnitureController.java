@@ -60,8 +60,8 @@ public class furnitureController {
         }
 
         if(!file.isEmpty()){
-            String nameFile = utilityService.saveFile(file,"src/main/resources/img/");
-            furniture.setPath(nameFile);
+            //String nameFile = utilityService.saveFile(file,"src/main/resources/img/");
+            //furniture.setPath(nameFile);
         }else{
             furniture.setPath(null);
         }
