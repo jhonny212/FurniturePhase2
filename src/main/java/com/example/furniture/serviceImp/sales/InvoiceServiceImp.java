@@ -47,18 +47,20 @@ public class InvoiceServiceImp implements InvoiceService {
     public Page<BillDetails> getReturnClient(Optional<Integer> nit, Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
 
         try {
-            return this.billDetailsRepository.findAllByBill_Client_IdAndDateReturnNotNullAndDateReturnBetween(
+            Page<BillDetails> pag = this.billDetailsRepository.findAllByBill_Client_IdAndDateReturnNotNullAndDateReturnBetween(
                     nit.get(),
                     date1.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("0001-01-01")),
                     date2.orElse(new SimpleDateFormat("yyyy-MM-dd").parse("2100-01-01")),
                     PageRequest.of(page.orElse(0), 25)
             );
+            return  pag;
         } catch (ParseException e) {
             e.printStackTrace();
-            return this.billDetailsRepository.findAllByBill_Client_IdAndDateReturnNotNull(
+            Page<BillDetails> pag = this.billDetailsRepository.findAllByBill_Client_IdAndDateReturnNotNull(
                     nit.get(),
                     PageRequest.of(page.orElse(0), 25)
             );
+            return  pag;
         }
     }
 

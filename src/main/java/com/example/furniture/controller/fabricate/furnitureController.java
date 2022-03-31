@@ -89,11 +89,14 @@ public class furnitureController {
         List<StockPiece> stockPieceList=new ArrayList<>();
         List<AssignFurniturePiece> assignFurniturePieceList = new ArrayList<>();
         double costo_total = 0;
+        List<Piece> listP = new ArrayList<>();
         for (int i = 0; i < assignPlanPieces.size(); i++) {
             AssignPlanPiece a = assignPlanPieces.get(i);
             int id = a.getPiece().getId();
             int amount = assignPlanPieces.get(i).getAmount();
-            List<StockPiece>  tmp = stockPieceRepository.findAllByIdAndStatus(id,0);
+            Piece pieceTmp = a.getPiece();
+            pieceTmp.setStock(pieceTmp.getStock()-amount);
+            List<StockPiece>  tmp = stockPieceRepository.findAllByPiece_IdAndStatus(id,0);
             if(tmp.size()<amount){
                 furniture.msj = "No hay piezas suficientes para armar el mueble "+a.getPiece().getName();
                 return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);
@@ -113,7 +116,8 @@ public class furnitureController {
         if(tmp!=null && stockPieceList.size()!=0 ){
             this.stockPieceRepository.saveAll(stockPieceList);
             this.assignFurniturePieceRepository.saveAll(assignFurniturePieceList);
-            return new ResponseEntity<>(tmp,HttpStatus.BAD_REQUEST);
+            this.pieceRepository.saveAll(listP);
+            return new ResponseEntity<>(tmp,HttpStatus.OK);
         }
         furniture.msj  = "Error al crear mueble, intente de nuevo";
         return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);

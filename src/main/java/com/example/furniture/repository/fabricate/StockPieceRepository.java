@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface StockPieceRepository extends JpaRepository<StockPiece,Integer> {
-    List<StockPiece> findAllByIdAndStatus(Integer id, Integer status);
+    List<StockPiece> findAllByPiece_IdAndStatus(Integer id, Integer status);
 }
