@@ -5,6 +5,7 @@ import com.example.furniture.model.Furniture;
 import com.example.furniture.model.Plan;
 import com.example.furniture.model.Profile;
 import com.example.furniture.repository.admin.AssignPlanPieceRepository;
+import com.example.furniture.repository.fabricate.AssignFurniturePieceRepository;
 import com.example.furniture.repository.fabricate.FurnitureRepository;
 import com.example.furniture.repository.fabricate.PieceRepository;
 import com.example.furniture.repository.fabricate.StockPieceRepository;
@@ -68,7 +69,8 @@ class furnitureControllerTest {
     StockPieceRepository stockPieceRepository;
     @MockBean
     FurnitureRepository furnitureRepository;
-
+    @MockBean
+    AssignFurniturePieceRepository assignFurniturePieceRepository;
 
     @BeforeEach
     void setUp() {
