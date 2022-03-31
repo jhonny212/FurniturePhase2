@@ -55,6 +55,23 @@ public class pieceController {
         return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
     }
 
+    @PostMapping("/remove-in-stock/{id}/{amount}")
+    public ResponseEntity<Boolean> removeInStockPiece(@PathVariable("id") int id, @PathVariable("amount") int amount){
+        if(amount > 0){
+            Piece tmp = this.pieceServiceImp.getPieceById(id);
+            if(tmp!=null){
+                if(tmp.getStock() >= amount){
+                    tmp.setStock(tmp.getStock()-amount);
+                    this.pieceServiceImp.removeInStock(tmp, amount);
+                    return new ResponseEntity<>(true,HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+                }
+            }
+        }
+        return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping("/update-piece")
     public ResponseEntity<Piece> updatePiece(@RequestBody Piece piece){
         piece.setCost(0);

@@ -42,4 +42,12 @@ public class StockPieceServiceImp implements StockPieceService {
         this.stockPieceRepository.saveAll(pieces);
         return true;
     }
+
+    public boolean removeInStock(Piece piece, int amount){
+        List<StockPiece> pieces = this.stockPieceRepository.findAllByPiece_IdAndStatus(piece.getId(),0);
+        for (int i = 0; i < amount; i++){
+            this.stockPieceRepository.delete(pieces.get(i));
+        }
+        return true;
+    }
 }

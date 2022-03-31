@@ -38,6 +38,10 @@ public class PieceServiceImp implements PieceService {
         this.stockPieceServiceImp.addInStock(piece,stock,cost);
     }
 
+    public void removeInStock(Piece piece, int amount){
+        this.stockPieceServiceImp.removeInStock(piece, amount);
+    }
+
     @Override
     public Piece getPieceById(Integer id) {
         Optional<Piece> piece =  this.pieceRepository.findById(id);
