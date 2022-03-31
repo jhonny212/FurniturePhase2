@@ -2,6 +2,7 @@ package com.example.furniture.controller.fabricate;
 
 import com.example.furniture.model.*;
 import com.example.furniture.repository.admin.AssignPlanPieceRepository;
+import com.example.furniture.repository.fabricate.AssignFurniturePieceRepository;
 import com.example.furniture.repository.fabricate.FurnitureRepository;
 import com.example.furniture.repository.fabricate.PieceRepository;
 import com.example.furniture.repository.fabricate.StockPieceRepository;
@@ -41,6 +42,8 @@ public class furnitureController {
     PieceRepository pieceRepository;
     @Autowired
     StockPieceRepository stockPieceRepository;
+    @Autowired
+    AssignFurniturePieceRepository assignFurniturePieceRepository;
 
     @PostMapping("/register-furniture")
     public ResponseEntity<Furniture> registerFurniture(
@@ -75,11 +78,13 @@ public class furnitureController {
         }
         List<AssignPlanPiece> assignPlanPieces = this.assignPlanPieceRepository.findAllByPlan_Id(Integer.parseInt(plan));
         List<StockPiece> stockPieceList=new ArrayList<>();
+        List<AssignFurniturePiece> assignFurniturePieceList = new ArrayList<>();
+        double costo_total = 0;
         for (int i = 0; i < assignPlanPieces.size(); i++) {
             AssignPlanPiece a = assignPlanPieces.get(i);
             int id = a.getPiece().getId();
             int amount = assignPlanPieces.get(i).getAmount();
-            List<StockPiece>  tmp = stockPieceRepository.findAllByIdAAndStatus(id,0);
+            List<StockPiece>  tmp = stockPieceRepository.findAllByIdAndStatus(id,0);
             if(tmp.size()<amount){
                 furniture.msj = "No hay piezas suficientes para armar el mueble "+a.getPiece().getName();
                 return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);
@@ -87,11 +92,18 @@ public class furnitureController {
             for (int j = 0; j < amount; j++) {
                 tmp.get(j).setStatus(1);
                 stockPieceList.add(tmp.get(j));
+                costo_total+=tmp.get(j).getCost();
+                AssignFurniturePiece assignFurniturePiece = new AssignFurniturePiece();
+                assignFurniturePiece.setFurniture(furniture);
+                assignFurniturePiece.setStockPiece(tmp.get(j));
+                assignFurniturePieceList.add(assignFurniturePiece);
             }
         }
+        furniture.setCost(costo_total);
         Furniture tmp = this.furnitureServiceImp.postFurniture(furniture);
         if(tmp!=null && stockPieceList.size()!=0 ){
             this.stockPieceRepository.saveAll(stockPieceList);
+            this.assignFurniturePieceRepository.saveAll(assignFurniturePieceList);
             return new ResponseEntity<>(tmp,HttpStatus.BAD_REQUEST);
         }
         furniture.msj  = "Error al crear mueble, intente de nuevo";
