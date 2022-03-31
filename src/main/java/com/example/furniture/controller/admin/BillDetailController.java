@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,10 +26,9 @@ public class BillDetailController {
     private ReportServiceImp reportServiceImp;
 
     @GetMapping("/report-sales-x-period")
-    public ResponseEntity<Page<BillDetails>> getReportSalesXPeriod(
+    public ResponseEntity<List<BillDetails>> getReportSalesXPeriod(
             @RequestParam Optional<String> date1,
-            @RequestParam Optional<String> date2,
-            @RequestParam Optional<Integer> page
+            @RequestParam Optional<String> date2
     ) throws ParseException {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
@@ -45,7 +45,7 @@ public class BillDetailController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return new ResponseEntity<>(this.billServiceImp.gerReportSalesXperiod(d1, d2, page), HttpStatus.OK);
+        return new ResponseEntity<>(this.billServiceImp.gerReportSalesXperiod(d1, d2), HttpStatus.OK);
     }
 
 }

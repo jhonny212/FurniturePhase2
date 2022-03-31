@@ -72,10 +72,9 @@ public class ReportController {
     }
 
     @GetMapping("/report-earnings-x-period")
-    public Page<BillDetails> getEarningsXPeriod(
+    public List<BillDetails> getEarningsXPeriod(
             @RequestParam Optional<String> date1,
-            @RequestParam Optional<String> date2,
-            @RequestParam Optional<Integer> page
+            @RequestParam Optional<String> date2
     ) throws ParseException {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
@@ -92,7 +91,7 @@ public class ReportController {
         Optional<Date> d1 = Optional.of(dates1);
         Optional<Date> d2 = Optional.of(dates2);
 
-        return this.billServiceImp.getReportEarningsXPeriod(d1, d2, page);
+        return this.billServiceImp.getReportEarningsXPeriod(d1, d2);
     }
 
     @GetMapping("/report-best-seller-x-period")

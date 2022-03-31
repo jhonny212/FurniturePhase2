@@ -25,11 +25,10 @@ public class BillServiceImp implements BillService {
     private BillRepository billRepository;
 
     @Override
-    public Page<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
+    public List<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2){
             return this.billDetailsRepository.findAllByBill_DateTimeBetweenAndDateReturnIsNull(
                     date1.get(),
-                    date2.get(),
-                    PageRequest.of(page.orElse(0), 100)
+                    date2.get()
             );
     }
 
@@ -60,11 +59,10 @@ public class BillServiceImp implements BillService {
     }
 
     @Override
-    public Page<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page){
+    public List<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2){
         return this.billDetailsRepository.findAllByBill_DateTimeBetween(
                 date1.get(),
-                date2.get(),
-                PageRequest.of(page.orElse(0), 100)
+                date2.get()
         );
     }
 

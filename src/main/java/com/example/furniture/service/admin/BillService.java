@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface BillService {
 
-    public Page<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page);
+    public List<BillDetails> gerReportSalesXperiod(Optional<Date> date1, Optional<Date> date2);
     public boolean doBill(Bill bill);
     public List<BillDetails> getReturnFurniture(Date dat1,Date date2);
     public List<BillDetails> getReturnFurniture();
     Object gerReportBestSellerXPeriod(Optional<Date> d1, Optional<Date> d2) throws ParseException;
     Object getReportBestEarnerXPeriod(Optional<Date> d1, Optional<Date> d2) throws ParseException;
-    public Page<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2, Optional<Integer> page);
+    public List<BillDetails> getReportEarningsXPeriod(Optional<Date> date1, Optional<Date> date2);
 }
