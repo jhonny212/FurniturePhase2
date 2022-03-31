@@ -1,16 +1,17 @@
 package com.example.furniture.controller.fabricate;
 
-import com.example.furniture.model.Furniture;
-import com.example.furniture.model.OnSaleData;
-import com.example.furniture.model.Plan;
-import com.example.furniture.model.Profile;
+import com.example.furniture.model.*;
+import com.example.furniture.repository.admin.AssignPlanPieceRepository;
 import com.example.furniture.repository.fabricate.FurnitureRepository;
+import com.example.furniture.repository.fabricate.PieceRepository;
+import com.example.furniture.repository.fabricate.StockPieceRepository;
 import com.example.furniture.service.fabricate.FurnitureService;
 import com.example.furniture.serviceImp.fabricate.FurnitureServiceImp;
 import com.example.furniture.util.Utility;
 import com.example.furniture.util.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,9 +35,15 @@ public class furnitureController {
     private FurnitureRepository furnitureRepository;
     @Autowired
     private Utility utilityService;
+    @Autowired
+    AssignPlanPieceRepository assignPlanPieceRepository;
+    @Autowired
+    PieceRepository pieceRepository;
+    @Autowired
+    StockPieceRepository stockPieceRepository;
 
     @PostMapping("/register-furniture")
-    public Furniture registerFurniture(
+    public ResponseEntity<Furniture> registerFurniture(
             @RequestParam("file") MultipartFile file,
             @RequestParam("code") Integer code,
             @RequestParam("name") String name,
@@ -57,7 +64,7 @@ public class furnitureController {
 
         if (this.furnitureServiceImp.isExisteFurniture(code)){
             furniture.msj = "Ya existe un Mueble con el mismo Codigo";
-            return furniture;
+            return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);
         }
 
         if(!file.isEmpty()){
@@ -66,8 +73,29 @@ public class furnitureController {
         }else{
             furniture.setPath(null);
         }
-
-        return this.furnitureServiceImp.postFurniture(furniture);
+        List<AssignPlanPiece> assignPlanPieces = this.assignPlanPieceRepository.findAllByPlan_Id(Integer.parseInt(plan));
+        List<StockPiece> stockPieceList=new ArrayList<>();
+        for (int i = 0; i < assignPlanPieces.size(); i++) {
+            AssignPlanPiece a = assignPlanPieces.get(i);
+            int id = a.getPiece().getId();
+            int amount = assignPlanPieces.get(i).getAmount();
+            List<StockPiece>  tmp = stockPieceRepository.findAllByIdAAndStatus(id,0);
+            if(tmp.size()<amount){
+                furniture.msj = "No hay piezas suficientes para armar el mueble "+a.getPiece().getName();
+                return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);
+            }
+            for (int j = 0; j < amount; j++) {
+                tmp.get(j).setStatus(1);
+                stockPieceList.add(tmp.get(j));
+            }
+        }
+        Furniture tmp = this.furnitureServiceImp.postFurniture(furniture);
+        if(tmp!=null && stockPieceList.size()!=0 ){
+            this.stockPieceRepository.saveAll(stockPieceList);
+            return new ResponseEntity<>(tmp,HttpStatus.BAD_REQUEST);
+        }
+        furniture.msj  = "Error al crear mueble, intente de nuevo";
+        return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/get-furniture")
