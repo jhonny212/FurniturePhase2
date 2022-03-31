@@ -79,7 +79,7 @@ public class furnitureController {
             AssignPlanPiece a = assignPlanPieces.get(i);
             int id = a.getPiece().getId();
             int amount = assignPlanPieces.get(i).getAmount();
-            List<StockPiece>  tmp = stockPieceRepository.findAllByIdAAndStatus(id,0);
+            List<StockPiece>  tmp = stockPieceRepository.findAllByIdAndStatus(id,0);
             if(tmp.size()<amount){
                 furniture.msj = "No hay piezas suficientes para armar el mueble "+a.getPiece().getName();
                 return new ResponseEntity<>(furniture,HttpStatus.BAD_REQUEST);
