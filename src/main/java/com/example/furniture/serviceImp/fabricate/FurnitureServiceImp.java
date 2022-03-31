@@ -42,7 +42,7 @@ public class FurnitureServiceImp implements FurnitureService {
         }catch (DataIntegrityViolationException e){
             furniture.msj = "Ocurrio un Error al Registrar el Mueble";
             System.out.println(e);
-            return furniture;
+            return null;
         }
 
     }
