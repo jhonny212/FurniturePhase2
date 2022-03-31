@@ -40,7 +40,7 @@ public class SaleFurnitureServiceImp implements SaleFurnitureService {
             System.out.println("s");
             if(tmp.isPresent()){
                 tmp.get().setCostLost(lost);
-                tmp.get().setBill(null);
+//                tmp.get().setBill(null);
                 tmp.get().setDateReturn(date);
                 this.billDetailsRepository.save(tmp.get());
                 return true;

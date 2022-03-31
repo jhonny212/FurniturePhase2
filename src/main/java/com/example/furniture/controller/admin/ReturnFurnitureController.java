@@ -25,7 +25,7 @@ public class ReturnFurnitureController {
                                                 @RequestParam Optional<String> date2){
         boolean valid = date1.isPresent() && date2.isPresent();
         if(valid){
-            SimpleDateFormat format=new SimpleDateFormat("MM-dd-yyyy");
+            SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
             try {
                 List<Object[]> s =this.billDetailsRepository.getLost2(0,format.parse(date1.get()),format.parse(date2.get()));
                 return s;
