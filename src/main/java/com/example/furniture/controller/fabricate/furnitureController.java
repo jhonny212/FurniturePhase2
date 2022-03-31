@@ -1,5 +1,6 @@
 package com.example.furniture.controller.fabricate;
 
+import com.example.furniture.config.JWTAuthorizationFilter;
 import com.example.furniture.model.*;
 import com.example.furniture.repository.admin.AssignPlanPieceRepository;
 import com.example.furniture.repository.fabricate.AssignFurniturePieceRepository;
@@ -10,6 +11,7 @@ import com.example.furniture.service.fabricate.FurnitureService;
 import com.example.furniture.serviceImp.fabricate.FurnitureServiceImp;
 import com.example.furniture.util.Utility;
 import com.example.furniture.util.ValidationService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -56,13 +58,18 @@ public class furnitureController {
             @RequestParam("description") String description,
             @RequestParam("path") String path,
             @RequestParam("profile") String profile,
-            @RequestParam("plan") String plan
+            @RequestParam("plan") String plan,
+            @RequestHeader("Authorization") String token
     ) throws ParseException {
+        JWTAuthorizationFilter jwtaf = new JWTAuthorizationFilter();
+        Claims claims = jwtaf.getClaimsFromToken(token);
+        Profile tmpProfile = new Profile();
+        tmpProfile.setId((Integer) claims.get("id_user"));
 
         SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
         Date date2=formatter2.parse(creationDate);
         Furniture furniture = new Furniture(code, name, Double.parseDouble(price), Double.parseDouble(cost), date2, description, path,
-                new Profile(Integer.parseInt(profile), null, null, null, null, null),
+                new Profile(tmpProfile.getId(), null, null, null, null, null),
                 new Plan(Integer.parseInt(plan), null, null, true), 0);
 
         if (this.furnitureServiceImp.isExisteFurniture(code)){
@@ -76,6 +83,8 @@ public class furnitureController {
         }else{
             furniture.setPath(null);
         }
+
+
         List<AssignPlanPiece> assignPlanPieces = this.assignPlanPieceRepository.findAllByPlan_Id(Integer.parseInt(plan));
         List<StockPiece> stockPieceList=new ArrayList<>();
         List<AssignFurniturePiece> assignFurniturePieceList = new ArrayList<>();
